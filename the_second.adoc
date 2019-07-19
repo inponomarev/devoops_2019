@@ -28,6 +28,7 @@ image::images/david_&_goliaf.jpg[]
 [.white.background]
 == Что болит?
 [%step]
+* Управление inventory для ansible
 
 [.white.background]
 == Погнали по пунктам?
