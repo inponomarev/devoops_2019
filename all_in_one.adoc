@@ -1,0 +1,7 @@
+include::the_first.adoc[]
+
+include::the_second.adoc[]
+
+include::diagram1.adoc[]
+
+include::the_third.adoc[]

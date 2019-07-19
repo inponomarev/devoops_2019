@@ -1,0 +1,48 @@
+:backend: revealjs
+:customcss: common.css
+
+[.white.background]
+== А что, собственно, деплоим?
+["graphviz", "main_scheme", "svg"]
+---------------------------------------------------------------------
+digraph main {
+  rankdir=LR
+  source [shape=polygon,sides=5,peripheries=3,color=lightblue,style=filled,label="Исходный \nсайт"];
+  spectator [shape=polygon,sides=5,peripheries=3,color=orange,style=filled,label="Пользователь"];
+
+  source -> bootstrapper;
+  bootstrapper -> redis;
+  puppetheatre -> redis -> puppetheatre;
+  puppetheatre -> kafka;
+  sop -> kafka -> sop;
+  kafka -> odds_api;
+
+  bootstrapper, puppetheatre, sop, odds_api, kafka -> logs;
+  bootstrapper, odds_api, kafka -> metrics;
+  odds_api, logs, metrics -> ingress;
+  ingress -> spectator;
+
+
+  subgraph mainline {
+    bootstrapper [shape=diamond];
+    sop [shape=diamond];
+    puppetheatre [shape=diamond];
+    odds_api [shape=diamond];
+  }
+
+  subgraph side_services {
+    redis [shape=box]
+    kafka [shape=box]
+  }
+
+  subgraph support {
+    ingress [shape=box];
+    dns_manager [shape=box];
+    cert_manager [shape=box];
+    metrics [shape=box];
+    logs [shape=box];
+    load_balancing [shape=box];
+    load_balancing, dns_manager, cert_manager -> ingress;
+  }
+}
+---------------------------------------------------------------------

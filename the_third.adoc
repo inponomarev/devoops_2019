@@ -1,0 +1,2 @@
+:backend: revealjs
+:customcss: common.css

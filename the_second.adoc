@@ -1,0 +1,99 @@
+:backend: revealjs
+:customcss: common.css
+
+[.white.background]
+== Когда каждый может обидеть
+image::images/david_&_goliaf.jpg[]
+
+[.white.background]
+== Что имеем на входе?
+[%step]
+* Облачный провайдер - DigitalOcean
+* Terraform
+** ~100 виртуальных машин
+** ~20 dns-записей
+* Ansible
+** ~20 плейбуков с пачкой ролей
+
+[.white.background]
+== Что болит?
+[%step]
+* Нет быстрого способа переехать к другому провайдеру.
+* МНОГО кода для деплоя
+* Отвратительное масштабирование системы.
+* Деплой тоже требует дебага.
+* Соблюдение идемпотентности.
+* Кто ходил на мою ноду?
+
+[.white.background]
+== Что болит?
+[%step]
+
+[.white.background]
+== Погнали по пунктам?
+image::images/the_roof_is_on_fire.jpg[]
+
+[.white.background]
+== !
+Оставь меня, я задержу их.
+----
+resource "digitalocean_droplet" "pgdb-dev" {
+    image = "31754481"
+    name = "pgdb-dev"
+    region = "ams2"
+    size = "s-2vcpu-2gb"
+    private_networking = "true"
+    resize_disk = "false"
+    ssh_keys = ["${var.ssh_keys}"]
+    user_data = "${file("minimal.conf")}"
+}
+----
+[%step]
+* Ах, если бы только ноды.
+
+[.white.background]
+== !
+Посыпьте их пеплом
+----
+variable "eps_names" { default = ["epsilon400", 
+                                  "epsilon401", 
+                                  "epsilon402", 
+                                  "epsilon403", 
+                                  "epsilon404",
+                                  "epsilon405"] }
+----
+[%step]
+* Когда в твою инфраструктуру попадает цикл.
+
+[.white.background]
+== !
+Когда каждый ansible-playbook - произведение искусства.
+----
+---
+- name: configure backoffice server
+... 10 more lines
+  roles:
+    - role: do_hostname
+... 20 more lines
+    - role: backoffice
+  tasks:
+... 50 more lines
+    - name: Reload nginx
+      service:
+        name: nginx
+        state: reloaded
+----
+[%step]
+* Долго, дорого, будет цениться после смерти автора(нет).
+
+[.white.background]
+== !
+Ansible-fu
+[%step]
+* А все ли изменения я захэндлил?
+
+[.white.background]
+== !
+Я бы этим безруким _________ все руки бы отрастил...
+[%step]
+* Или, может, не будем трогать дев(тест, стейдж) руками?
