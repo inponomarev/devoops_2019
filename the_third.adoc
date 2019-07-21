@@ -1,7 +1,0 @@
-:backend: revealjs
-:customcss: common.css
-
-[.white.background]
-== !
-Надеваем перчатки.
-[%step]

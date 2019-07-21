@@ -1,0 +1,98 @@
+:backend: revealjs
+:customcss: common.css
+:revealjs_transition: none
+
+
+== Terraform+Kubernetes as a gate to heaven.
+
+== Я рассажу вас по стульчикам.
+image::images/before_k8s_after_k8s.jpg[]
+
+[transition=none]
+== !
+["graphviz", "terraform_initial1", "svg"]
+---------------------------------------------------------------------
+digraph main {
+  rankdir = LR;
+  terraform  [shape=polygon,sides=6,peripheries=3,color=blueviolet,style=filled,label="Terraform"];
+}
+---------------------------------------------------------------------
+
+[transition=none]
+== !
+["graphviz", "terraform_initial2", "svg"]
+---------------------------------------------------------------------
+digraph main {
+  rankdir = LR;
+  terraform  [shape=polygon,sides=6,peripheries=3,color=blueviolet,style=filled,label="Terraform"];
+
+  terraform -> cloud_provider;
+}
+---------------------------------------------------------------------
+
+[transition=none]
+== !
+["graphviz", "terraform_initial3", "svg"]
+---------------------------------------------------------------------
+digraph main {
+  rankdir = LR;
+  terraform  [shape=polygon,sides=6,peripheries=3,color=blueviolet,style=filled,label="Terraform"];
+
+  terraform -> cloud_provider -> k8s_cluster;
+}
+---------------------------------------------------------------------
+
+[transition=none]
+== !
+["graphviz", "terraform_initial4", "svg"]
+---------------------------------------------------------------------
+digraph main {
+  rankdir = LR;
+  terraform  [shape=polygon,sides=6,peripheries=3,color=blueviolet,style=filled,label="Terraform"];
+  terraform -> cloud_provider -> k8s_cluster -> helm;
+}
+---------------------------------------------------------------------
+
+[transition=none]
+== !
+["graphviz", "terraform_initial5", "svg"]
+---------------------------------------------------------------------
+digraph main {
+  rankdir = LR;
+  terraform  [shape=polygon,sides=6,peripheries=3,color=blueviolet,style=filled,label="Terraform"];
+
+  terraform -> cloud_provider -> k8s_cluster -> helm -> chart;
+}
+---------------------------------------------------------------------
+
+[transition=none]
+== !
+["graphviz", "terraform_initial6", "svg"]
+---------------------------------------------------------------------
+digraph main {
+  rankdir = LR;
+  terraform  [shape=polygon,sides=6,peripheries=3,color=blueviolet,style=filled,label="Terraform"];
+  profit [label="Profit?"]
+  terraform -> cloud_provider -> k8s_cluster -> helm -> chart -> profit;
+}
+---------------------------------------------------------------------
+
+[transition=none]
+== !
+["graphviz", "terraform_initial7", "svg"]
+---------------------------------------------------------------------
+digraph main {
+  rankdir = LR;
+  terraform  [shape=polygon,sides=6,peripheries=3,color=blueviolet,style=filled,label="Terraform"];
+  profit [label="Profit?"]
+  cloud_provider -> k8s_cluster -> helm -> chart -> profit;
+  terraform -> cloud_provider[label="infrastructure"];
+  terraform -> k8s_cluster[label="secrets, tiller"];
+  terraform -> helm[label="datasource"];
+  terraform -> chart[label="values"];
+}
+---------------------------------------------------------------------
+
+== Хорошо всё, кроме одной вещи.
+[%step]
+* Правая рука не знает, что делает левая.

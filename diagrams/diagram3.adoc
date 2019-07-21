@@ -1,0 +1,72 @@
+:backend: revealjs
+:revealjs_theme: white
+:customcss: common.css
+:revealjs_transition: none
+
+== Выход - пусть этим занимается kubernetes.
+
+== !
+["graphviz", "terraform_kubernetes", "svg"]
+---------------------------------------------------------------------
+digraph main {
+  rankdir = LR;
+  terraform  [shape=polygon,sides=6,peripheries=3,color=blueviolet,style=filled,label="Terraform"];
+  cloud_provider -> k8s_cluster -> helm -> chart;
+  terraform -> cloud_provider[label="infrastructure"];
+  terraform -> k8s_cluster[label="secrets, tiller"];
+  terraform -> helm[label="datasource"];
+  terraform -> chart[label="values"];
+}
+---------------------------------------------------------------------
+
+== !
+["graphviz", "terraform_kubernetes1", "svg"]
+---------------------------------------------------------------------
+digraph main {
+  rankdir = LR;
+  terraform  [shape=polygon,sides=6,peripheries=3,color=blueviolet,style=filled,label="Terraform"];
+  cloud_provider -> k8s_cluster -> helm -> chart;
+  terraform -> cloud_provider[label="infrastructure"];
+  terraform -> k8s_cluster[label="secrets, tiller"];
+  terraform -> helm[label="datasource"];
+  terraform -> chart[label="values"];
+  chart -> k8s_cluster[label="scaling, ingress"]
+}
+---------------------------------------------------------------------
+
+== !
+["graphviz", "terraform_kubernetes2", "svg"]
+---------------------------------------------------------------------
+digraph main {
+  rankdir = LR;
+  terraform  [shape=polygon,sides=6,peripheries=3,color=blueviolet,style=filled,label="Terraform"];
+  cloud_provider -> k8s_cluster -> helm -> chart;
+  terraform -> cloud_provider[label="infrastructure"];
+  terraform -> k8s_cluster[label="secrets, tiller"];
+  terraform -> helm[label="datasource"];
+  terraform -> chart[label="values"];
+  chart -> k8s_cluster[label="scaling, ingress"]
+  k8s_cluster -> cloud_provider[label="infrastructure, dns, lb"]
+}
+---------------------------------------------------------------------
+
+== !
+["graphviz", "terraform_kubernetes3", "svg"]
+---------------------------------------------------------------------
+digraph main {
+  rankdir = LR;
+  terraform  [shape=polygon,sides=6,peripheries=3,color=blueviolet,style=filled,label="Terraform"];
+  cloud_provider -> k8s_cluster -> helm -> chart;
+  terraform -> cloud_provider[label="infrastructure"];
+  terraform -> k8s_cluster[label="secrets, tiller"];
+  terraform -> helm[label="datasource"];
+  terraform -> chart[label="values",color=red];
+  chart -> k8s_cluster[label="scaling, ingress"]
+  k8s_cluster -> cloud_provider[label="infrastructure, dns, lb"]
+}
+---------------------------------------------------------------------
+
+== Почему это удобно?
+[%step]
+* Всё находится в default values.yml в чарте.
+* И инфраструктура тоже.

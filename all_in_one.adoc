@@ -1,7 +1,17 @@
-include::the_first.adoc[]
+:backend: revealjs
+:revealjs_theme: white
+:customcss: common.css
+:revealjs_transition: none
+:revealjs_slideNumber: true
 
-include::the_second.adoc[]
+include::parts/the_first.adoc[]
 
-include::diagram1.adoc[]
+include::parts/the_second.adoc[]
 
-include::the_third.adoc[]
+include::diagrams/diagram1.adoc[]
+
+include::diagrams/diagram2.adoc[]
+
+include::diagrams/diagram3.adoc[]
+
+include::parts/the_third.adoc[]
