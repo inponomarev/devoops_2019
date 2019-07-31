@@ -1,4 +1,6 @@
 .bundle
 Gemfile.lock
 .asciidoctor
-#reveal.js
+reveal.js
+*.svg
+*.html
