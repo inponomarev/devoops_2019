@@ -1,16 +1,19 @@
 :backend: revealjs
 :customcss: common.css
 
-== Когда каждый может обидеть
-image::images/david_&_goliaf.jpg[]
-
 == Что имеем на входе?
 [%step]
 * Облачный провайдер - DigitalOcean
+
+=== Что имеем на входе?
+[%step]
 * Terraform
 ** ~1000 строк провайдер-ориентированного кода
 ** ~100 виртуальных машин
 ** ~20 dns-записей
+
+=== Что имеем на входе?
+[%step]
 * Ansible
 ** ~5000 строк кода
 ** ~20 плейбуков с пачкой ролей
@@ -24,17 +27,17 @@ image::images/david_&_goliaf.jpg[]
 * Соблюдение идемпотентности.
 * Кто ходил на мою ноду?
 
-== Ansible-fu?
+=== Ansible-fu?
 [%step]
 * Управление inventory для ansible
 * Конфигурационный ад.
 * Управление сервисами при обновлении.
 * Зависимость от операционной системы.
 
-== Погнали по пунктам?
+=== !
 image::images/the_roof_is_on_fire.jpg[]
 
-== !
+=== !
 Оставь меня, я задержу их.
 ----
 resource "digitalocean_droplet" "pgdb-dev" {
@@ -51,7 +54,7 @@ resource "digitalocean_droplet" "pgdb-dev" {
 [%step]
 * Ах, если бы только ноды.
 
-== !
+=== !
 Посыпьте их пеплом
 ----
 variable "eps_names" { default = ["epsilon400", 
@@ -64,7 +67,7 @@ variable "eps_names" { default = ["epsilon400",
 [%step]
 * Когда в твою инфраструктуру попадает цикл.
 
-== !
+=== !
 Когда каждый ansible-playbook - произведение искусства.
 ----
 ---

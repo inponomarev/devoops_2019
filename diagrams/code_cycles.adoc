@@ -3,17 +3,17 @@
 :customcss: common.css
 :revealjs_transition: none
 
-=== !
+=== Как хорошо, что все мы здесь...
 ["graphviz", "code_cycle", "svg"]
 ---------------------------------------------------------------------
 digraph main {
   rankdir = LR;
-  vcs -> jenkins[label="code"];
-  jenkins -> artifactory[label=artifact];
+  GitHub -> Jenkins[label="code"];
+  Jenkins -> Artifactory[label="jar-file"];
 }
 ---------------------------------------------------------------------
 
-=== !
+=== Как хорошо, что все мы здесь...
 ----
 try {
         stage ('Exec Maven') {
@@ -24,20 +24,24 @@ try {
         step( [ $class: 'JacocoPublisher', execPattern: 'target/jacoco.exec' ] )
         checkstyle pattern: 'target/checkstyle-result.xml'
     }
+if (isRelease) {
+            stage ('Publish build info') {
+                server.publishBuildInfo buildInfo
+            }
 ----
 
-=== !
+=== Там, в красном уголке
 ["graphviz", "image_cycle", "svg"]
 ---------------------------------------------------------------------
 digraph main {
   rankdir = LR;
-  vcs -> jenkins[label="code"];
-  artifactory -> jenkins[label="artifact"];
-  jenkins -> artifactory[label="image"];
+  GitHub -> Jenkins[label="code"];
+  Artifactory -> Jenkins[label="jar-file"];
+  Jenkins -> Artifactory[label="docker-image"];
 }
 ---------------------------------------------------------------------
 
-=== !
+=== Там, в красном уголке
 ----
 stage ('Build and publish docker container') {
     env.RELEASE_VERSION = releaseVersion
@@ -46,17 +50,24 @@ stage ('Build and publish docker container') {
 }
 ----
 
-=== !
+=== Почему докер?
+[%step]
+* Урезать рацион
+* Легко масштабировать
+* Упал - перезапустился
+* Изоляция окружения
+
+=== Борьба за зависимости
 ["graphviz", "chart_cycle", "svg"]
 ---------------------------------------------------------------------
 digraph main {
   rankdir = LR;
-  vcs -> jenkins[label="code"];
-  jenkins -> artifactory[label="chart"]
+  GitHub -> Jenkins[label="code"];
+  Jenkins -> Artifactory[label="chart"]
 }
 ---------------------------------------------------------------------
 
-=== !
+=== Борьба за зависимости
 ----
 stage ('Package and index repo') {
     sh 'helm init --client-only'
@@ -64,7 +75,7 @@ stage ('Package and index repo') {
     sh 'helm dependency update melbet'
     sh 'helm package melbet | true'
     sh 'helm repo index .'
-    withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'artifactory_ansible_user',
+    withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'Artifactory_ansible_user',
             usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD']]) {
         sh 'curl -u $USERNAME:$PASSWORD -T melbet-0.1.0.tgz https://artifactory.corchestra.ru/artifactory/helm/'
         sh 'curl -u $USERNAME:$PASSWORD -T index.yaml https://artifactory.corchestra.ru/artifactory/helm/'
@@ -72,19 +83,27 @@ stage ('Package and index repo') {
 }
 ----
 
-=== !
+=== Почему helm?
+[%step]
+* Пакетный менеджер для сервисов k8s
+* Cloud Native Computing Foundation
+* Большое количество готовых пакетов для классического web
+* Скоро будет Helm 3 без детских болезней(уже есть альфа)
+* Достаточно выбрать другой namespace, и будет dev, test, staging, prod
+
+=== Инфраструктура тоже здесь
 ["graphviz", "infra_cycle", "svg"]
 ---------------------------------------------------------------------
 digraph main {
   rankdir = LR;
-  vcs -> atlantis[label="tf"];
-  artifactory -> cloud_provider[label="images, charts"];
-  atlantis -> cloud_provider[label="tf, creds"];
-  atlantis -> artifactory[label="tfstate"];
+  GitHub -> Atlantis[label="tf"];
+  Artifactory -> cloud_provider[label="images, charts"];
+  Atlantis -> cloud_provider[label="tf, creds"];
+  Atlantis -> Artifactory[label="tfstate"];
 }
 ---------------------------------------------------------------------
 
-=== !
+=== Инфраструктура тоже здесь
 ----
 version: 2
 projects:
@@ -101,7 +120,7 @@ workflows:
     plan:
       steps:
       - init:
-          extra_args: ["-backend-config=/opt/artifactory.tfvars"]
+          extra_args: ["-backend-config=/opt/Artifactory.tfvars"]
       - plan:
           extra_args: ["-lock=false", "-var-file", "/opt/kubecluster.tfvars"]
     apply:
@@ -109,19 +128,105 @@ workflows:
       - apply
 ----
 
-=== !
+=== Некосмический корабль
+["graphviz", "Atlantis_1", "svg"]
+---------------------------------------------------------------------
+digraph main {
+  rankdir = LR;
+  GitHub -> Atlantis[label="webhook",color=red]
+  GitHub -> Atlantis[label="tf-file",color=red]
+  GitHub -> Atlantis[label="apply"]
+  Atlantis -> cloud_provider[label="infrastructure"]
+  Atlantis -> backend[label="tfstate"]
+  backend -> Atlantis[label="tfstate"]
+  Atlantis -> GitHub[label="output"]
+}
+---------------------------------------------------------------------
+
+=== Некосмический корабль
+["graphviz", "Atlantis_2", "svg"]
+---------------------------------------------------------------------
+digraph main {
+  rankdir = LR;
+  GitHub -> Atlantis[label="webhook"]
+  GitHub -> Atlantis[label="tf-file"]
+  GitHub -> Atlantis[label="apply"]
+  Atlantis -> cloud_provider[label="infrastructure"]
+  Atlantis -> backend[label="tfstate"]
+  backend -> Atlantis[label="tfstate",color=red]
+  Atlantis -> GitHub[label="output",color=red]
+}
+---------------------------------------------------------------------
+
+=== Некосмический корабль
+["graphviz", "Atlantis_3", "svg"]
+---------------------------------------------------------------------
+digraph main {
+  rankdir = LR;
+  GitHub -> Atlantis[label="webhook"]
+  GitHub -> Atlantis[label="tf-file"]
+  GitHub -> Atlantis[label="apply",color=red]
+  Atlantis -> cloud_provider[label="infrastructure"]
+  Atlantis -> backend[label="tfstate"]
+  backend -> Atlantis[label="tfstate"]
+  Atlantis -> GitHub[label="output"]
+}
+---------------------------------------------------------------------
+
+=== Некосмический корабль
+["graphviz", "Atlantis_4", "svg"]
+---------------------------------------------------------------------
+digraph main {
+  rankdir = LR;
+  GitHub -> Atlantis[label="webhook"]
+  GitHub -> Atlantis[label="tf-file"]
+  Atlantis -> cloud_provider[label="infrastructure",color=red]
+  Atlantis -> backend[label="tfstate",color=red]
+  GitHub -> Atlantis[label="apply"]
+  backend -> Atlantis[label="tfstate"]
+  Atlantis -> GitHub[label="output",color=red]
+}
+---------------------------------------------------------------------
+
+=== Atlantis - IaC автоматизация прямо из VCS
+image::images/hero.png[]
+
+=== Не будем отвлекаться
 ["graphviz", "all_cycle", "svg"]
 ---------------------------------------------------------------------
 digraph main {
   rankdir = LR;
-  vcs -> jenkins[label="code"];
-  jenkins -> artifactory[label="artifact"];
-  artifactory -> jenkins[label="artifact"];
-  jenkins -> artifactory[label="image"];
-  jenkins -> artifactory[label="chart"];
-  vcs -> atlantis[label="tf"];
-  artifactory -> cloud_provider[label="artifact"];
-  atlantis -> cloud_provider[label="tf, creds, helm"];
-  atlantis -> artifactory[label="tfstate"];
+  GitHub;
+  Atlantis;
+  cloud_provider;
+  GitHub -> Jenkins[label="code"];
+  Jenkins -> Artifactory[label="jar-file"];
+  Artifactory -> Jenkins[label="jar-file"];
+  Jenkins -> Artifactory[label="image"];
+  Jenkins -> Artifactory[label="chart"];
+  GitHub -> Atlantis[label="tf"];
+  Artifactory -> cloud_provider[label="docker-image, chart"];
+  Atlantis -> cloud_provider[label="tf, creds, helm"];
+  Atlantis -> Artifactory[label="tfstate"];
+}
+---------------------------------------------------------------------
+
+=== Не будем отвлекаться
+["graphviz", "all_cycle_interest", "svg"]
+---------------------------------------------------------------------
+digraph main {
+  rankdir = LR;
+  GitHub[color=blue];
+  Atlantis[color=blue];
+  cloud_provider[color=blue];
+  GitHub -> Jenkins[label="code"];
+  Jenkins -> Artifactory[label="jar-file"];
+  Artifactory -> Jenkins[label="jar-file"];
+  Jenkins -> Artifactory[label="image"];
+  Jenkins -> Artifactory[label="chart"];
+  GitHub -> Atlantis[label="tf",color=blue];
+  Artifactory -> cloud_provider[label="docker-image, chart"];
+  Atlantis -> cloud_provider[label="tf, creds, helm",color=blue];
+  Atlantis -> Artifactory[label="tfstate"];
 }
 ---------------------------------------------------------------------

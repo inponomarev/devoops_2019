@@ -11,21 +11,22 @@ digraph main {
   source [shape=polygon,sides=5,peripheries=3,color=lightblue,style=filled,label="Исходный \nсайт"];
   spectator [shape=polygon,sides=5,peripheries=3,color=orange,style=filled,label="Пользователь"];
 
-  source -> puppetheatre;
-  bootstrapper -> redis -> bootstrapper;
-  puppetheatre -> redis -> puppetheatre;
-  puppetheatre -> kafka;
-  sop -> kafka -> sop;
+  source -> service_2;
+  service_1 -> redis -> service_1;
+  service_2 -> redis -> service_2;
+  service_2 -> kafka;
+  service_3 -> kafka -> service_3;
   kafka -> odds_api;
+
 
   odds_api -> ingress;
   ingress -> spectator;
 
   subgraph mainline {
     label = "Main line";
-    bootstrapper [shape=diamond];
-    puppetheatre [shape=diamond];
-    sop [shape=diamond];
+    service_1 [shape=diamond];
+    service_2 [shape=diamond];
+    service_3 [shape=diamond];
     odds_api [shape=diamond];
   }
 
@@ -45,6 +46,7 @@ digraph main {
   //   ingress [shape=box];
   // }
   // load_balancer, dns_manager, cert_manager -> ingress;
+  ingress [shape=box];
 
   subgraph service {
     label = "Service";
@@ -53,5 +55,13 @@ digraph main {
     metrics [shape=box];
   }
   logs, metrics -> ingress;
+}
+---------------------------------------------------------------------
+
+["graphviz", "main_scheme_legend", "svg"]
+---------------------------------------------------------------------
+digraph main {
+  service [shape=diamond,label="Наши сервисы"];
+  side_service [shape=box, label="Сторонние сервисы"];
 }
 ---------------------------------------------------------------------

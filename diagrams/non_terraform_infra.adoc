@@ -33,56 +33,6 @@ digraph main {
 ---------------------------------------------------------------------
 
 === !
-----
-odds-api:
-  image:
-    tag: 1.0.5
-  nodeSelector:
-    cloud.google.com/gke-nodepool: support-pool
-  ingress:
-    enabled: true
-    annotations:
-      kubernetes.io/ingress.class: nginx
-    hosts:
-      - host: odds-api.888totobet.com
-        paths:
-         - "/"
-----
-
-=== !
-----
-nginx-ingress:
-  controller:
-    nodeSelector:
-      cloud.google.com/gke-nodepool: support-pool
-    service:
-      annotations: 
-        external-dns.alpha.kubernetes.io/hostname: grafana.888totobet.com, odds-api.888totobet.com, kibana.888totobet.com
-  default-backend:
-    nodeSelector:
-      cloud.google.com/gke-nodepool: support-pool
-----
-
-=== !
-----
-external-dns:
-  provider: digitalocean
-  digitalocean:
-    apiToken: "very_secret_api_token"
-  rbac:
-    create: true
-  sources:
-    - service
-  logLevel: info
-  publishInternalServices: true
-  registry: noop
-----
-
-=== Здесь должен быть код для cert-manager
-
-=== Здесь должен быть код для cluster-autoscaler
-
-=== !
 ["graphviz", "terraform_kubernetes2", "svg"]
 ---------------------------------------------------------------------
 digraph main {
@@ -114,7 +64,7 @@ digraph main {
 }
 ---------------------------------------------------------------------
 
-== Почему это удобно?
+=== Почему это удобно?
 [%step]
 * Всё находится в default values.yml в чарте.
 * И инфраструктура тоже.

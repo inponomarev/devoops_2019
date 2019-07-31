@@ -75,8 +75,7 @@ digraph main {
 digraph main {
   rankdir = LR;
   terraform  [shape=polygon,sides=6,peripheries=3,color=blueviolet,style=filled,label="Terraform"];
-  profit [label="Profit?"]
-  cloud_provider -> k8s_cluster -> helm -> chart -> profit;
+  cloud_provider -> k8s_cluster -> helm -> chart;
   terraform -> cloud_provider[label="infrastructure"];
   terraform -> k8s_cluster[label="secrets, tiller"];
   terraform -> helm[label="datasource"];
@@ -85,6 +84,7 @@ digraph main {
 ---------------------------------------------------------------------
 
 
-== Хорошо всё, кроме одной вещи.
+=== Всё хорошо. Почти.
 [%step]
 * Правая рука не знает, что делает левая.
+* Для каждого изменения - терраформ.

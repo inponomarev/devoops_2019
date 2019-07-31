@@ -19,9 +19,7 @@ resource "digitalocean_kubernetes_cluster" "melbet2" {
 
 }
 ----
-
-=== !
-Итого: 144 строки для DigitalOcean
+Итого:: 144 строки для DigitalOcean
 
 === !
 ----
@@ -43,10 +41,70 @@ resource "google_container_cluster" "melbet" {
   }
 }
 ----
-
-=== !
-Итого: 149 строк для GCP
+Итого:: 149 строк для GCP
 
 == Helm как способ управления инфраструктурой
 
-=== Для dns-записей в GCP достаточно
+=== values.yml для сервиса
+----
+service_3:
+  image:
+    tag: 1.0.5
+  nodeSelector:
+    cloud.google.com/gke-nodepool: support-pool
+  ingress:
+    enabled: true
+    annotations:
+      kubernetes.io/ingress.class: nginx
+    hosts:
+      - host: service_3.example.com
+        paths:
+         - "/"
+----
+
+=== values.yml для ingress
+----
+nginx-ingress:
+  controller:
+    nodeSelector:
+      cloud.google.com/gke-nodepool: support-pool
+    service:
+      annotations: 
+        external-dns.alpha.kubernetes.io/hostname: service_3.example.com, grafana.example.com, kibana.example.com
+  default-backend:
+    nodeSelector:
+      cloud.google.com/gke-nodepool: support-pool
+----
+
+=== values.yml для dns
+----
+external-dns:
+  provider: digitalocean
+  digitalocean:
+    apiToken: "very_secret_api_token"
+  rbac:
+    create: true
+  sources:
+    - service
+  logLevel: info
+  publishInternalServices: true
+  registry: noop
+----
+
+=== Здесь должен быть код для cert-manager
+
+=== Здесь должен быть код для cluster-autoscaler
+
+== Проблемы
+
+=== Helm tiller
+[%step]
+* Скоро станет неактуальным
+
+=== Persistence
+[%step]
+* Неактуальным не станет
+
+=== Kafka
+[%step]
+* Купить сервис и забыть
