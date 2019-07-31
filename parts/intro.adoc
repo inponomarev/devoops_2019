@@ -1,5 +1,5 @@
 :backend: revealjs
-:customcss: common.css
+:customcss: common.css  
 
 = Квадратно-гнездовое мышление как образ жизни
 Дмитрий Губенко, КУРС
