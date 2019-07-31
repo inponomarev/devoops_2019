@@ -1,0 +1,52 @@
+:backend: revealjs
+:customcss: common.css
+
+== Terraform как способ инициализации.
+
+=== !
+----
+resource "digitalocean_kubernetes_cluster" "melbet2" {
+  name    = "melbet"
+  region  = "lon1"
+  version = "1.14.2-do.0"
+
+  node_pool {
+    name       = "puppetheatre-pool"
+    size       = "s-4vcpu-8gb"
+    node_count = 10
+    tags       = ["puppetheatre"]
+  }
+
+}
+----
+
+=== !
+Итого: 144 строки для DigitalOcean
+
+=== !
+----
+resource "google_container_cluster" "melbet" {
+  name               = "melbet-cluster"
+  location               = "europe-north1-a"
+  remove_default_node_pool = true
+  initial_node_count = 1
+
+  // Use legacy ABAC until these issues are resolved: 
+  //   https://github.com/mcuadros/terraform-provider-helm/issues/56
+  //   https://github.com/terraform-providers/terraform-provider-kubernetes/pull/73
+  enable_legacy_abac = true
+
+  // Wait for the GCE LB controller to cleanup the resources.
+  provisioner "local-exec" {
+    when    = "destroy"
+    command = "sleep 90"
+  }
+}
+----
+
+=== !
+Итого: 149 строк для GCP
+
+== Helm как способ управления инфраструктурой
+
+=== Для dns-записей в GCP достаточно

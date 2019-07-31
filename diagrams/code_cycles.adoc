@@ -1,0 +1,127 @@
+:backend: revealjs
+:revealjs_theme: white
+:customcss: common.css
+:revealjs_transition: none
+
+=== !
+["graphviz", "code_cycle", "svg"]
+---------------------------------------------------------------------
+digraph main {
+  rankdir = LR;
+  vcs -> jenkins[label="code"];
+  jenkins -> artifactory[label=artifact];
+}
+---------------------------------------------------------------------
+
+=== !
+----
+try {
+        stage ('Exec Maven') {
+            rtMaven.run pom: 'pom.xml', goals: 'clean install', buildInfo: buildInfo
+        }
+    } finally {
+        junit '**/surefire-reports/**/*.xml'
+        step( [ $class: 'JacocoPublisher', execPattern: 'target/jacoco.exec' ] )
+        checkstyle pattern: 'target/checkstyle-result.xml'
+    }
+----
+
+=== !
+["graphviz", "image_cycle", "svg"]
+---------------------------------------------------------------------
+digraph main {
+  rankdir = LR;
+  vcs -> jenkins[label="code"];
+  artifactory -> jenkins[label="artifact"];
+  jenkins -> artifactory[label="image"];
+}
+---------------------------------------------------------------------
+
+=== !
+----
+stage ('Build and publish docker container') {
+    env.RELEASE_VERSION = releaseVersion
+    sh 'docker build . -t artifactory.corchestra.ru/docker/$JOB_NAME:$RELEASE_VERSION --build-arg version=$RELEASE_VERSION'
+    sh 'docker push artifactory.corchestra.ru/docker/$JOB_NAME:$RELEASE_VERSION'
+}
+----
+
+=== !
+["graphviz", "chart_cycle", "svg"]
+---------------------------------------------------------------------
+digraph main {
+  rankdir = LR;
+  vcs -> jenkins[label="code"];
+  jenkins -> artifactory[label="chart"]
+}
+---------------------------------------------------------------------
+
+=== !
+----
+stage ('Package and index repo') {
+    sh 'helm init --client-only'
+    sh 'helm repo add cp-helm-charts https://confluentinc.github.io/cp-helm-charts'
+    sh 'helm dependency update melbet'
+    sh 'helm package melbet | true'
+    sh 'helm repo index .'
+    withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'artifactory_ansible_user',
+            usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD']]) {
+        sh 'curl -u $USERNAME:$PASSWORD -T melbet-0.1.0.tgz https://artifactory.corchestra.ru/artifactory/helm/'
+        sh 'curl -u $USERNAME:$PASSWORD -T index.yaml https://artifactory.corchestra.ru/artifactory/helm/'
+    }
+}
+----
+
+=== !
+["graphviz", "infra_cycle", "svg"]
+---------------------------------------------------------------------
+digraph main {
+  rankdir = LR;
+  vcs -> atlantis[label="tf"];
+  artifactory -> cloud_provider[label="images, charts"];
+  atlantis -> cloud_provider[label="tf, creds"];
+  atlantis -> artifactory[label="tfstate"];
+}
+---------------------------------------------------------------------
+
+=== !
+----
+version: 2
+projects:
+- name: betsource
+  dir: .
+  workspace: default
+  terraform_version: v0.11.13
+  autoplan:
+    when_modified: ["*.tf", "./modules/**/*.tf"]
+  apply_requirements: [approved]
+  workflow: betsource
+workflows:
+  betsource:
+    plan:
+      steps:
+      - init:
+          extra_args: ["-backend-config=/opt/artifactory.tfvars"]
+      - plan:
+          extra_args: ["-lock=false", "-var-file", "/opt/kubecluster.tfvars"]
+    apply:
+      steps:
+      - apply
+----
+
+=== !
+["graphviz", "all_cycle", "svg"]
+---------------------------------------------------------------------
+digraph main {
+  rankdir = LR;
+  vcs -> jenkins[label="code"];
+  jenkins -> artifactory[label="artifact"];
+  artifactory -> jenkins[label="artifact"];
+  jenkins -> artifactory[label="image"];
+  jenkins -> artifactory[label="chart"];
+  vcs -> atlantis[label="tf"];
+  artifactory -> cloud_provider[label="artifact"];
+  atlantis -> cloud_provider[label="tf, creds, helm"];
+  atlantis -> artifactory[label="tfstate"];
+}
+---------------------------------------------------------------------

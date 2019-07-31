@@ -4,14 +4,23 @@
 :revealjs_transition: none
 :revealjs_slideNumber: true
 
-include::parts/the_first.adoc[]
+include::parts/intro.adoc[]
 
-include::parts/the_second.adoc[]
+include::parts/problem.adoc[]
 
-include::diagrams/diagram1.adoc[]
+include::diagrams/deployment.adoc[]
 
-include::diagrams/diagram2.adoc[]
+include::diagrams/code_cycles.adoc[]
 
-include::diagrams/diagram3.adoc[]
+include::diagrams/terraform.adoc[]
 
-include::parts/the_third.adoc[]
+include::parts/solving.adoc[]
+
+include::diagrams/non_terraform_infra.adoc[]
+
+include::diagrams/deployment_with_support.adoc[]
+
+include::parts/misc.adoc[]
+
+
+

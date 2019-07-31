@@ -1,0 +1,9 @@
+:backend: revealjs
+:customcss: common.css
+
+== Из пушки по воробьям?
+[%step]
+* Добавить/убавить ноду в пул.
+* Пробросить dns-запись.
+* Настроить load-balancing.
+* Завесить сертификат на ingress.

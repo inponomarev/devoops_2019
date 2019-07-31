@@ -36,15 +36,15 @@ digraph main {
     kafka [shape=box]
   }
 
-  subgraph support {
-    label = "Support";
-    rank = same;
-    dns_manager [shape=box];
-    cert_manager [shape=box];
-    load_balancer [shape=box];
-    ingress [shape=box];
-  }
-  load_balancer, dns_manager, cert_manager -> ingress;
+  // subgraph support {
+  //   label = "Support";
+  //   rank = same;
+  //   dns_manager [shape=box];
+  //   cert_manager [shape=box];
+  //   load_balancer [shape=box];
+  //   ingress [shape=box];
+  // }
+  // load_balancer, dns_manager, cert_manager -> ingress;
 
   subgraph service {
     label = "Service";

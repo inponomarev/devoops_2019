@@ -2,3 +2,5 @@
 Gemfile.lock
 .asciidoctor
 reveal.js
+*.svg
+*.html
