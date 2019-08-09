@@ -45,51 +45,76 @@ resource "google_container_cluster" "melbet" {
 
 == Helm как способ управления инфраструктурой
 
-=== values.yml для сервиса
+=== Было: 15 строк кода для одного сервиса со скалированием
 ----
-service_3:
-  image:
-    tag: 1.0.5
-  nodeSelector:
-    cloud.google.com/gke-nodepool: support-pool
-  ingress:
-    enabled: true
-    annotations:
-      kubernetes.io/ingress.class: nginx
-    hosts:
-      - host: service_3.example.com
-        paths:
-         - "/"
+variable "eps_names" { default = ["epsilon400.example.com", 
+                                  "epsilon401.example.com", 
+                                  "epsilon402.example.com", 
+                                  "epsilon403.example.com", 
+                                  "epsilon404.example.com",
+                                  "epsilon405.example.com"] }
+
+resource "digitalocean_droplet" "epsilon" {
+    count = "5"
+    image = "ubuntu-16-04-x64"
+    name = "${element(var.eps_names, count.index)}"
+    region = "lon1"
+    size = "s-2vcpu-2gb"
+    ssh_keys = ["${var.ssh_fingerprint}"]
+    user_data = "${file("minimal.conf")}"
+}
 ----
 
-=== values.yml для ingress
+=== Стало: ручное скалирование сервиса одной строкой
+----
+service_3:
+  image: artifactory.example.com/docker/service_3
+    tag: 1.0.5
+  replicaCount: 8
+----
+[%step]
+*Для управления числом под достаточно указать replicaCount.
+
+=== Стало: автоматическое скалирование сервиса одним template
+----
+apiVersion: autoscaling/v2beta1
+kind: HorizontalPodAutoscaler
+...
+----
+[%step]
+*Штатные возможности Kubernetes легко автоматизируются в Helm.
+
+=== Было: 7 строк кода ради одной записи, прибитой гвоздями
+----
+resource "digitalocean_record" "example-com-dev" {
+  domain = "${digitalocean_domain.example-com.name}"
+  type   = "A"
+  ttl    = "1800"
+  name   = "dev"
+  value  = "37.228.89.82"
+}
+----
+
+=== Стало: автоматизация ingress
 ----
 nginx-ingress:
-  controller:
-    nodeSelector:
-      cloud.google.com/gke-nodepool: support-pool
     service:
       annotations: 
         external-dns.alpha.kubernetes.io/hostname: service_3.example.com, grafana.example.com, kibana.example.com
-  default-backend:
-    nodeSelector:
-      cloud.google.com/gke-nodepool: support-pool
 ----
+[%step]
+*Сервисы пробрасываются одним списком.
 
-=== values.yml для dns
+=== Стало: автоматизация dns
 ----
 external-dns:
-  provider: digitalocean
-  digitalocean:
-    apiToken: "very_secret_api_token"
-  rbac:
-    create: true
   sources:
     - service
-  logLevel: info
   publishInternalServices: true
   registry: noop
 ----
+[%step]
+*Каждый проброшенный сервис получает dns-запись
 
 === Здесь должен быть код для cert-manager
 
@@ -100,6 +125,7 @@ external-dns:
 === Helm tiller
 [%step]
 * Скоро станет неактуальным
+* https://habr.com/ru/company/oleg-bunin/blog/462665 - статья по безопасности Helm
 
 === Persistence
 [%step]
