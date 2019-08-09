@@ -19,6 +19,7 @@ script:
     asciidoctor/docker-asciidoctor
     asciidoctor-revealjs
     -a revealjsdir=https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.7.0
+    -r asciidoctor-diagram
     -o index.html
     -D /documents/output
     all_in_one.adoc
