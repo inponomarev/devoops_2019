@@ -28,20 +28,23 @@ resource "google_container_cluster" "melbet" {
   location               = "europe-north1-a"
   remove_default_node_pool = true
   initial_node_count = 1
-
-  // Use legacy ABAC until these issues are resolved: 
-  //   https://github.com/mcuadros/terraform-provider-helm/issues/56
-  //   https://github.com/terraform-providers/terraform-provider-kubernetes/pull/73
   enable_legacy_abac = true
-
-  // Wait for the GCE LB controller to cleanup the resources.
   provisioner "local-exec" {
     when    = "destroy"
     command = "sleep 90"
   }
 }
 ----
-Итого:: 149 строк для GCP
+Итого:: 144 строки для GCP
+
+=== В Terraform остаются:
+[%step]
+* Заказ кластера и node-pool(единственное, что теперь зависит от провайдера)
+* Secrets для Kubernetes(credentials для Artifactory)
+* Инициализация Helm-tiller
+* Первичная установка Helm-chart c указанием namespaces
+
+=== При переезде из DO в GCP меняется ~20 строк
 
 == Helm как способ управления инфраструктурой
 
@@ -73,7 +76,7 @@ service_3:
   replicaCount: 8
 ----
 [%step]
-*Для управления числом под достаточно указать replicaCount.
+* Для управления числом под достаточно указать replicaCount.
 
 === Стало: автоматическое скалирование сервиса одним template
 ----
@@ -82,7 +85,19 @@ kind: HorizontalPodAutoscaler
 ...
 ----
 [%step]
-*Штатные возможности Kubernetes легко автоматизируются в Helm.
+* Штатные возможности Kubernetes легко автоматизируются в Helm.
+
+=== Стало: автоматическое скалирование кластера одним helm-chart(cluster-autoscaler)
+----
+cluster-autoscaler:
+  autoDiscovery:
+    clusterName: example_cluster_name
+  cloudProvider=gce
+  autoscalingGroupsnamePrefix[0]:
+    name: example_node_pool_name
+    maxSize: 10
+    minSize: 1
+----
 
 === Было: 7 строк кода ради одной записи, прибитой гвоздями
 ----
@@ -117,8 +132,6 @@ external-dns:
 *Каждый проброшенный сервис получает dns-запись
 
 === Здесь должен быть код для cert-manager
-
-=== Здесь должен быть код для cluster-autoscaler
 
 == Проблемы
 
