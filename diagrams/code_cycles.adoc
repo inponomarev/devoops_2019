@@ -3,7 +3,7 @@
 :customcss: common.css
 :revealjs_transition: none
 
-=== Как хорошо, что все мы здесь...
+=== Сборка jar-file
 ["graphviz", "code_cycle", "svg"]
 ---------------------------------------------------------------------
 digraph main {
@@ -13,24 +13,7 @@ digraph main {
 }
 ---------------------------------------------------------------------
 
-=== Как хорошо, что все мы здесь...
-----
-try {
-        stage ('Exec Maven') {
-            rtMaven.run pom: 'pom.xml', goals: 'clean install', buildInfo: buildInfo
-        }
-    } finally {
-        junit '**/surefire-reports/**/*.xml'
-        step( [ $class: 'JacocoPublisher', execPattern: 'target/jacoco.exec' ] )
-        checkstyle pattern: 'target/checkstyle-result.xml'
-    }
-if (isRelease) {
-            stage ('Publish build info') {
-                server.publishBuildInfo buildInfo
-            }
-----
-
-=== Там, в красном уголке
+=== Сборка docker-образа
 ["graphviz", "image_cycle", "svg"]
 ---------------------------------------------------------------------
 digraph main {
@@ -41,23 +24,14 @@ digraph main {
 }
 ---------------------------------------------------------------------
 
-=== Там, в красном уголке
-----
-stage ('Build and publish docker container') {
-    env.RELEASE_VERSION = releaseVersion
-    sh 'docker build . -t artifactory.corchestra.ru/docker/$JOB_NAME:$RELEASE_VERSION --build-arg version=$RELEASE_VERSION'
-    sh 'docker push artifactory.corchestra.ru/docker/$JOB_NAME:$RELEASE_VERSION'
-}
-----
-
-=== Почему докер?
+=== Почему docker/kubernetes?
 [%step]
 * Урезать рацион
 * Легко масштабировать
 * Упал - перезапустился
 * Изоляция окружения
 
-=== Борьба за зависимости
+=== Упаковка helm-чарта
 ["graphviz", "chart_cycle", "svg"]
 ---------------------------------------------------------------------
 digraph main {
@@ -66,22 +40,6 @@ digraph main {
   Jenkins -> Artifactory[label="chart"]
 }
 ---------------------------------------------------------------------
-
-=== Борьба за зависимости
-----
-stage ('Package and index repo') {
-    sh 'helm init --client-only'
-    sh 'helm repo add cp-helm-charts https://confluentinc.github.io/cp-helm-charts'
-    sh 'helm dependency update melbet'
-    sh 'helm package melbet | true'
-    sh 'helm repo index .'
-    withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'Artifactory_ansible_user',
-            usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD']]) {
-        sh 'curl -u $USERNAME:$PASSWORD -T melbet-0.1.0.tgz https://artifactory.corchestra.ru/artifactory/helm/'
-        sh 'curl -u $USERNAME:$PASSWORD -T index.yaml https://artifactory.corchestra.ru/artifactory/helm/'
-    }
-}
-----
 
 === Почему helm?
 [%step]
@@ -102,31 +60,6 @@ digraph main {
   Atlantis -> Artifactory[label="tfstate"];
 }
 ---------------------------------------------------------------------
-
-=== Инфраструктура тоже здесь
-----
-version: 2
-projects:
-- name: betsource
-  dir: .
-  workspace: default
-  terraform_version: v0.11.13
-  autoplan:
-    when_modified: ["*.tf", "./modules/**/*.tf"]
-  apply_requirements: [approved]
-  workflow: betsource
-workflows:
-  betsource:
-    plan:
-      steps:
-      - init:
-          extra_args: ["-backend-config=/opt/Artifactory.tfvars"]
-      - plan:
-          extra_args: ["-lock=false", "-var-file", "/opt/kubecluster.tfvars"]
-    apply:
-      steps:
-      - apply
-----
 
 === Некосмический корабль
 ["graphviz", "Atlantis_1", "svg"]
@@ -189,7 +122,7 @@ digraph main {
 ---------------------------------------------------------------------
 
 === Atlantis - IaC автоматизация прямо из VCS
-image::images/hero.png[]
+//image::images/hero.png[]
 
 === Не будем отвлекаться
 ["graphviz", "all_cycle", "svg"]
