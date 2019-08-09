@@ -18,8 +18,6 @@ include::parts/solving.adoc[]
 
 include::diagrams/non_terraform_infra.adoc[]
 
-include::diagrams/deployment_with_support.adoc[]
-
 include::parts/misc.adoc[]
 
 include::parts/final.adoc[]
