@@ -118,7 +118,7 @@ nginx-ingress:
         external-dns.alpha.kubernetes.io/hostname: service_3.example.com, grafana.example.com, kibana.example.com
 ----
 [%step]
-*Сервисы пробрасываются одним списком.
+* Сервисы пробрасываются одним списком.
 
 === Стало: автоматизация dns
 ----
@@ -129,7 +129,7 @@ external-dns:
   registry: noop
 ----
 [%step]
-*Каждый проброшенный сервис получает dns-запись
+* Каждый проброшенный сервис получает dns-запись
 
 == Проблемы
 
