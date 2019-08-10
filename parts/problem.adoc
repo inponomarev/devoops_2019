@@ -27,7 +27,7 @@
 * Кто ходил на мою ноду?
 
 === !
-//image::images/the_roof_is_on_fire.jpg[]
+image::images/the_roof_is_on_fire.jpg[]
 
 === !
 Оставь меня, я задержу их.
