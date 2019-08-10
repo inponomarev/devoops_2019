@@ -69,7 +69,7 @@ digraph main {
 ---------------------------------------------------------------------
 
 === Atlantis - IaC автоматизация прямо из VCS
-//image::images/hero.png[]
+image::images/hero.png[]
 
 === Некосмический корабль
 ["graphviz", "Atlantis_1", "svg"]
