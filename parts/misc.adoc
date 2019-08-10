@@ -76,6 +76,7 @@ service_3:
   replicaCount: 8
 ----
 === Стало: ручное скалирование сервиса одной строкой
+---------------------------------------------------------------------
 digraph main {
   rankdir = LR;
   subgraph before_scaling {
@@ -88,6 +89,7 @@ digraph main {
   }
   service -> kafka[ltail=before_scaling,lhead=after_scaling];
 }
+---------------------------------------------------------------------
 [%step]
 * Для управления числом под достаточно указать replicaCount.
 
