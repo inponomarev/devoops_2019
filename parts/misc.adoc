@@ -75,22 +75,6 @@ service_3:
     tag: 1.0.5
   replicaCount: 8
 ----
-=== Стало: ручное скалирование сервиса одной строкой
-["graphviz", "manual_scaling", "svg"]
----------------------------------------------------------------------
-digraph main {
-  rankdir = LR;
-  subgraph before_scaling {
-    kafka -> service[label="data"];
-    service -> kafka[label="data"];
-  }
-  subgraph after_scaling {
-    kafka -> {service_pod_1, service_pod_2, service_pod_3}[label="data"];
-    {service_pod_1, service_pod_2, service_pod_3} -> kafka[label="data"];
-  }
-  service -> kafka[ltail=before_scaling,lhead=after_scaling];
-}
----------------------------------------------------------------------
 [%step]
 * Для управления числом под достаточно указать replicaCount.
 
