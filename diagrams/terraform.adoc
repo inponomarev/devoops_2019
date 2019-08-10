@@ -2,8 +2,8 @@
 :customcss: common.css
 :revealjs_transition: none
 
-== Я рассажу вас по стульчикам.
-image::images/before_k8s_after_k8s.jpg[]
+//== Я рассажу вас по стульчикам.
+//image::images/before_k8s_after_k8s.jpg[]
 
 [transition=none]
 === !
