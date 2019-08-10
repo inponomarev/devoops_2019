@@ -99,14 +99,14 @@ cluster-autoscaler:
     minSize: 1
 ----
 
-=== Было: 7 строк кода ради одной записи, прибитой гвоздями
+=== Было: 7 строк кода ради одной записи
 ----
-resource "digitalocean_record" "example-com-dev" {
-  domain = "${digitalocean_domain.example-com.name}"
-  type   = "A"
+resource "digitalocean_record" "888toto-bet-dashboard" {
+  domain = "${digitalocean_domain.888toto-bet.name}"
+  type   = "A"  
   ttl    = "1800"
-  name   = "dev"
-  value  = "37.228.89.82"
+  name   = "dashboard"
+  value = "${digitalocean_droplet.dashboard.ipv4_address}"
 }
 ----
 
@@ -118,7 +118,20 @@ nginx-ingress:
         external-dns.alpha.kubernetes.io/hostname: service_3.example.com, grafana.example.com, kibana.example.com
 ----
 [%step]
-* Сервисы пробрасываются одним списком.
+* Ingress-controller самостоятельно настраивает реверс-прокси для сервисов
+
+=== Стало: автоматизация ingress
+----
+ingress:
+    enabled: true
+    annotations:
+      kubernetes.io/ingress.class: nginx
+    hosts:
+      - host: odds-api.888totobet.com
+        paths:
+          - "/"
+    tls: []
+----
 
 === Стало: автоматизация dns
 ----
@@ -129,7 +142,7 @@ external-dns:
   registry: noop
 ----
 [%step]
-* Каждый проброшенный сервис получает dns-запись
+* С помощью external-dns каждый проброшенный сервис получает dns-запись
 
 == Проблемы
 
