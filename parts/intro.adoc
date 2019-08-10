@@ -10,4 +10,4 @@
 Telegram:: @Dmeatriy
 
 === Когда каждый может обидеть
-image::images/david_&_goliaf.jpg[]
+//image::images/david_&_goliaf.jpg[]
