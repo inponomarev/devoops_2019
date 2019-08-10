@@ -16,9 +16,9 @@ digraph main {
   service_2 -> redis -> service_2;
   service_2 -> kafka;
   service_3 -> kafka -> service_3;
-  kafka -> odds_api;
+  kafka -> service_4;
 
-  odds_api -> ingress;
+  service_4 -> ingress;
   ingress -> spectator;
 
   subgraph mainline {
@@ -26,7 +26,7 @@ digraph main {
     service_1 [shape=diamond];
     service_2 [shape=diamond];
     service_3 [shape=diamond];
-    odds_api [shape=diamond];
+    service_4 [shape=diamond];
   }
 
   subgraph side_services {
