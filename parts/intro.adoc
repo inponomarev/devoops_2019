@@ -9,5 +9,5 @@
 Почта:: dmeatriy@gmail.com
 Telegram:: @Dmeatriy
 
-=== Когда каждый может обидеть
+//=== Когда каждый может обидеть
 //image::images/david_&_goliaf.jpg[]
