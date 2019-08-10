@@ -1,7 +1,8 @@
 :backend: revealjs
 :customcss: common.css  
 
-= Квадратно-гнездовое мышление как образ жизни
+= Terraform vs Helm: +
+Битва за конфигурацию +
 Дмитрий Губенко, КУРС
 
 == !
@@ -9,5 +10,5 @@
 Почта:: dmeatriy@gmail.com
 Telegram:: @Dmeatriy
 
-//=== Когда каждый может обидеть
-//image::images/david_&_goliaf.jpg[]
+=== Когда каждый может обидеть
+image::images/david_&_goliaf.jpg[]
