@@ -11,10 +11,10 @@ digraph main {
   source [shape=polygon,sides=5,peripheries=3,color=lightblue,style=filled,label="Исходный \nсайт"];
   spectator [shape=polygon,sides=5,peripheries=3,color=orange,style=filled,label="Пользователь"];
 
-  source -> service_2;
+  source -> service_1;
   service_1 -> redis -> service_1;
   service_2 -> redis -> service_2;
-  service_2 -> kafka;
+  service_1 -> kafka;
   service_3 -> kafka -> service_3;
   kafka -> service_4;
 
