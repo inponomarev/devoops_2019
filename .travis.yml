@@ -20,7 +20,7 @@ script:
     --name asciidoc-to-html 
     asciidoctor/docker-asciidoctor
     asciidoctor-revealjs
-    -a revealjsdir=output/reveal.js
+    -a revealjsdir=reveal.js
     -r asciidoctor-diagram
     -o index.html
     -D /documents/output
