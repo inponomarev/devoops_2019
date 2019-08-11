@@ -1,5 +1,6 @@
 :backend: revealjs
 :revealjs_theme: white
+:revealjs_customtheme: white_course.css
 :customcss: common.css
 :revealjs_transition: none
 :revealjs_slideNumber: true
