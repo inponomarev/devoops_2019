@@ -11,6 +11,7 @@ digraph main {
   source [shape=polygon,sides=5,peripheries=3,color=lightblue,style=filled,label="Исходный \nсайт"];
   spectator [shape=polygon,sides=5,peripheries=3,color=orange,style=filled,label="Пользователь"];
   source -> spectator[label="data"];
+}
 ---------------------------------------------------------------------
 
 === А что, собственно, деплоим?
@@ -98,6 +99,7 @@ digraph main {
     ingress [shape=box];
   }
   load_balancer, dns_manager, cert_manager -> ingress;
+}
 ---------------------------------------------------------------------
 
 ["graphviz", "main_scheme_legend", "svg"]
