@@ -4,6 +4,9 @@
 :customcss: common.css
 :revealjs_transition: none
 :revealjs_slideNumber: true
+:revealjs_center: false
+:revealjs_width: 1600
+:revealjs_height: 900
 
 include::parts/intro.adoc[]
 
