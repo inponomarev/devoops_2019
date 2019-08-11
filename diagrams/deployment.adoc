@@ -21,6 +21,7 @@ digraph main {
   rankdir = LR;
   source [shape=polygon,sides=5,peripheries=3,color=lightblue,style=filled,label="Исходный \nсайт"];
   spectator [shape=polygon,sides=5,peripheries=3,color=orange,style=filled,label="Пользователь"];
+  ingress [shape=box];
 
   source -> service_1;
   service_1 -> redis -> service_1;
