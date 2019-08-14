@@ -11,15 +11,19 @@ services:
 before_install:
   - mkdir -p output
   - docker pull asciidoctor/docker-asciidoctor
+  - git clone -b 3.7.0 --depth 1 https://github.com/hakimel/reveal.js.git output/reveal.js
 
 script:
+  - cp white_course.css output/white_course.css
   - cp -r images output
+  - cp -r font-awesome-4.7.0 output
+  - cp -r roboto-2014 output
   - > 
     docker run -v $TRAVIS_BUILD_DIR/:/documents/
     --name asciidoc-to-html 
     asciidoctor/docker-asciidoctor
     asciidoctor-revealjs
-    -a revealjsdir=https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.7.0
+    -a revealjsdir=reveal.js
     -r asciidoctor-diagram
     -o index.html
     -D /documents/output
