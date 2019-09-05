@@ -1,7 +1,7 @@
 :backend: revealjs
 :customcss: common.css  
 
-= Terraform vs Helm: Битва за конфигурацию
+= Terraform vs Helm: Битва за инфраструктуру
 Дмитрий Губенко, КУРС
 
 == !
