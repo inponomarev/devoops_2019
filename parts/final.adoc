@@ -8,6 +8,12 @@
 * Легко масштабироваться
 * Легко поддерживать несколько контуров
 
+=== Что почитать/посмотреть?
+[%step]
+* Флант блог https://habr.com/ru/company/flant
+* Atlantis https://www.runatlantis.io
+* Google блог https://cloud.google.com/blog/products/devops-sre
+
 === Выводы
 
 === Разгружайте ваш Terraform
@@ -15,12 +21,6 @@
 
 === Нагружайте ваш Helm
 Пакетный менеджер с легкостью справляется с задачами инфраструктуры в пределах сервиса.
-
-=== Что почитать/посмотреть?
-[%step]
-* Флант блог https://habr.com/ru/company/flant
-* Atlantis https://www.runatlantis.io
-* Google блог https://cloud.google.com/blog/products/devops-sre
 
 === На ваши вопросы ответит
 Имя:: Дмитрий Губенко, КУРС
