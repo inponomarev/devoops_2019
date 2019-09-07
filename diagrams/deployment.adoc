@@ -7,9 +7,11 @@
 ["graphviz", "main_scheme_joke", "svg"]
 ---------------------------------------------------------------------
 digraph main {
+  node [fontname = "PT Sans", fontsize=20];
+  edge [fontname = "PT Sans", fontsize=20];
   rankdir = LR;
-  source [shape=polygon,sides=5,peripheries=3,color=lightblue,style=filled,label="Исходный \nсайт"];
-  spectator [shape=polygon,sides=5,peripheries=3,color=orange,style=filled,label="Пользователь"];
+  source [shape=polygon,sides=5,peripheries=3,color=lightblue,style=filled,height=1.5,label="Исходный \nсайт"];
+  spectator [shape=polygon,sides=5,peripheries=3,color=orange,style=filled,height=1.5,label="Пользователь"];
   source -> spectator[label="data"];
 }
 ---------------------------------------------------------------------
@@ -27,9 +29,11 @@ digraph main {
 ["graphviz", "main_scheme_1", "svg"]
 ---------------------------------------------------------------------
 digraph main {
+  node [fontname = "PT Sans", fontsize=20];
+  edge [fontname = "PT Sans", fontsize=20];
   rankdir = LR;
-  source [shape=polygon,sides=5,peripheries=3,color=lightblue,style=filled,label="Исходный \nсайт"];
-  spectator [shape=polygon,sides=5,peripheries=3,color=orange,style=filled,label="Пользователь"];
+  source [shape=polygon,sides=5,peripheries=3,color=lightblue,style=filled,height=1.5,label="Исходный \nсайт"];
+  spectator [shape=polygon,sides=5,peripheries=3,color=orange,style=filled,height=1.5,label="Пользователь"];
 
   source -> service_1;
   service_1 -> redis -> service_1;
@@ -55,9 +59,11 @@ digraph main {
 }
 ---------------------------------------------------------------------
 
-["graphviz", "main_scheme_legend", "svg"]
+["graphviz", "main_scheme_legend_", "svg"]
 ---------------------------------------------------------------------
 digraph main {
+  node [fontname = "PT Sans", fontsize=20];
+  edge [fontname = "PT Sans", fontsize=20];
   service [shape=diamond,label="Наши сервисы"];
   side_service [shape=box, label="Сторонние сервисы"];
 }
@@ -79,9 +85,11 @@ digraph main {
 ["graphviz", "main_scheme_2", "svg"]
 ---------------------------------------------------------------------
 digraph main {
+  node [fontname = "PT Sans", fontsize=20];
+  edge [fontname = "PT Sans", fontsize=20];
   rankdir = LR;
-  source [shape=polygon,sides=5,peripheries=3,color=lightblue,style=filled,label="Исходный \nсайт"];
-  spectator [shape=polygon,sides=5,peripheries=3,color=orange,style=filled,label="Пользователь"];
+  source [shape=polygon,sides=5,peripheries=3,color=lightblue,style=filled,height=1.5,label="Исходный \nсайт"];
+  spectator [shape=polygon,sides=5,peripheries=3,color=orange,style=filled,height=1.5,label="Пользователь"];
 
   source -> service_1;
   service_1 -> redis -> service_1;
@@ -120,9 +128,11 @@ digraph main {
 }
 ---------------------------------------------------------------------
 
-["graphviz", "main_scheme_legend", "svg"]
+["graphviz", "main_scheme_legend_", "svg"]
 ---------------------------------------------------------------------
 digraph main {
+  node [fontname = "PT Sans", fontsize=20];
+  edge [fontname = "PT Sans", fontsize=20];
   service [shape=diamond,label="Наши сервисы"];
   side_service [shape=box, label="Сторонние сервисы"];
 }
@@ -141,9 +151,11 @@ digraph main {
 ["graphviz", "main_scheme_3", "svg"]
 ---------------------------------------------------------------------
 digraph main {
+  node [fontname = "PT Sans", fontsize=20];
+  edge [fontname = "PT Sans", fontsize=20];
   rankdir = LR;
-  source [shape=polygon,sides=5,peripheries=3,color=lightblue,style=filled,label="Исходный \nсайт"];
-  spectator [shape=polygon,sides=5,peripheries=3,color=orange,style=filled,label="Пользователь"];
+  source [shape=polygon,sides=5,peripheries=3,color=lightblue,style=filled,height=1.5,label="Исходный \nсайт"];
+  spectator [shape=polygon,sides=5,peripheries=3,color=orange,style=filled,height=1.5,label="Пользователь"];
 
   source -> service_1;
   service_1 -> redis -> service_1;
@@ -190,9 +202,11 @@ digraph main {
 }
 ---------------------------------------------------------------------
 
-["graphviz", "main_scheme_legend", "svg"]
+["graphviz", "main_scheme_legend_", "svg"]
 ---------------------------------------------------------------------
 digraph main {
+  node [fontname = "PT Sans", fontsize=20];
+  edge [fontname = "PT Sans", fontsize=20];
   service [shape=diamond,label="Наши сервисы"];
   side_service [shape=box, label="Сторонние сервисы"];
 }
