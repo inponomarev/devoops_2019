@@ -4,3 +4,4 @@ Gemfile.lock
 reveal.js
 *.svg
 *.html
+output/
