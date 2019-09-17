@@ -10,11 +10,10 @@ services:
 
 before_install:
   - mkdir -p output
-  - docker pull asciidoctor/docker-asciidoctor
+  - docker pull dmeatriy1993/asciidoctor_sans
   - git clone -b 3.7.0 --depth 1 https://github.com/hakimel/reveal.js.git output/reveal.js
 
 script:
-  - apk add ttf-opensans
   - cp white_course.css output/white_course.css
   - cp -r images output
   - cp -r font-awesome-4.7.0 output
@@ -22,7 +21,7 @@ script:
   - > 
     docker run -v $TRAVIS_BUILD_DIR/:/documents/
     --name asciidoc-to-html 
-    asciidoctor/docker-asciidoctor
+    dmeatriy1993/asciidoctor_sans
     asciidoctor-revealjs
     -a revealjsdir=reveal.js
     -r asciidoctor-diagram
