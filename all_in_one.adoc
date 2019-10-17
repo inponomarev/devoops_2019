@@ -21,8 +21,6 @@ include::parts/terraform.adoc[]
 
 include::parts/solving.adoc[]
 
-include::parts/non_terraform_infra.adoc[]
-
 include::parts/misc.adoc[]
 
 include::parts/final.adoc[]

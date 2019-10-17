@@ -25,44 +25,6 @@ digraph main {
 ---------------------------------------------------------------------
 
 === !
-["graphviz", "terraform_initial2", "png"]
----------------------------------------------------------------------
-digraph main {
-  node [fontname = "PT Sans", fontsize=20];
-  edge [fontname = "PT Sans", fontsize=20];
-  rankdir = LR;
-  terraform  [shape=polygon,sides=6,peripheries=3,color=blueviolet,style=filled,label="Terraform"];
-
-  terraform -> cloud_provider;
-}
----------------------------------------------------------------------
-
-=== !
-["graphviz", "terraform_initial3", "png"]
----------------------------------------------------------------------
-digraph main {
-  node [fontname = "PT Sans", fontsize=20];
-  edge [fontname = "PT Sans", fontsize=20];
-  rankdir = LR;
-  terraform  [shape=polygon,sides=6,peripheries=3,color=blueviolet,style=filled,label="Terraform"];
-
-  terraform -> cloud_provider -> k8s_cluster;
-}
----------------------------------------------------------------------
-
-=== !
-["graphviz", "terraform_initial4", "png"]
----------------------------------------------------------------------
-digraph main {
-  node [fontname = "PT Sans", fontsize=20];
-  edge [fontname = "PT Sans", fontsize=20];
-  rankdir = LR;
-  terraform  [shape=polygon,sides=6,peripheries=3,color=blueviolet,style=filled,label="Terraform"];
-  terraform -> cloud_provider -> k8s_cluster -> helm;
-}
----------------------------------------------------------------------
-
-=== !
 ["graphviz", "terraform_initial5", "png"]
 ---------------------------------------------------------------------
 digraph main {
