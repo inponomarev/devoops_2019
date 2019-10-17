@@ -37,7 +37,7 @@ after_failure:
 
 deploy:
   provider: pages
-  skip_cleanup: false
+  skip_cleanup: true
   github_token: $GH_TOKEN
   local_dir: output
   on:
