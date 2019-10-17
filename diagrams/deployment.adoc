@@ -4,7 +4,7 @@
 :revealjs_transition: none
 
 == А что, собственно, деплоим?
-["graphviz", "main_scheme_joke", "svg"]
+["graphviz", "main_scheme_joke", "png"]
 ---------------------------------------------------------------------
 digraph main {
   node [fontname = "PT Sans", fontsize=20];
@@ -26,7 +26,7 @@ digraph main {
 --
 
 === А что, собственно, деплоим?
-["graphviz", "main_scheme_1", "svg"]
+["graphviz", "main_scheme_1", "png"]
 ---------------------------------------------------------------------
 digraph main {
   node [fontname = "PT Sans", fontsize=20];
@@ -59,7 +59,7 @@ digraph main {
 }
 ---------------------------------------------------------------------
 
-["graphviz", "main_scheme_legend_", "svg"]
+["graphviz", "main_scheme_legend_", "png"]
 ---------------------------------------------------------------------
 digraph main {
   node [fontname = "PT Sans", fontsize=20];
@@ -82,7 +82,7 @@ digraph main {
 --
 
 === А что, собственно, деплоим?
-["graphviz", "main_scheme_2", "svg"]
+["graphviz", "main_scheme_2", "png"]
 ---------------------------------------------------------------------
 digraph main {
   node [fontname = "PT Sans", fontsize=20];
@@ -128,7 +128,7 @@ digraph main {
 }
 ---------------------------------------------------------------------
 
-["graphviz", "main_scheme_legend_", "svg"]
+["graphviz", "main_scheme_legend_", "png"]
 ---------------------------------------------------------------------
 digraph main {
   node [fontname = "PT Sans", fontsize=20];
@@ -148,7 +148,7 @@ digraph main {
 --
 
 === А что, собственно, деплоим?
-["graphviz", "main_scheme_3", "svg"]
+["graphviz", "main_scheme_3", "png"]
 ---------------------------------------------------------------------
 digraph main {
   node [fontname = "PT Sans", fontsize=20];
@@ -202,7 +202,7 @@ digraph main {
 }
 ---------------------------------------------------------------------
 
-["graphviz", "main_scheme_legend_", "svg"]
+["graphviz", "main_scheme_legend_", "png"]
 ---------------------------------------------------------------------
 digraph main {
   node [fontname = "PT Sans", fontsize=20];

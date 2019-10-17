@@ -7,7 +7,7 @@
 
 [transition=none]
 === !
-["graphviz", "terraform_initial1", "svg"]
+["graphviz", "terraform_initial1", "png"]
 ---------------------------------------------------------------------
 digraph main {
   rankdir = LR;
@@ -16,7 +16,7 @@ digraph main {
 ---------------------------------------------------------------------
 
 === !
-["graphviz", "terraform_initial2", "svg"]
+["graphviz", "terraform_initial2", "png"]
 ---------------------------------------------------------------------
 digraph main {
   rankdir = LR;
@@ -27,7 +27,7 @@ digraph main {
 ---------------------------------------------------------------------
 
 === !
-["graphviz", "terraform_initial3", "svg"]
+["graphviz", "terraform_initial3", "png"]
 ---------------------------------------------------------------------
 digraph main {
   rankdir = LR;
@@ -38,7 +38,7 @@ digraph main {
 ---------------------------------------------------------------------
 
 === !
-["graphviz", "terraform_initial4", "svg"]
+["graphviz", "terraform_initial4", "png"]
 ---------------------------------------------------------------------
 digraph main {
   rankdir = LR;
@@ -48,7 +48,7 @@ digraph main {
 ---------------------------------------------------------------------
 
 === !
-["graphviz", "terraform_initial5", "svg"]
+["graphviz", "terraform_initial5", "png"]
 ---------------------------------------------------------------------
 digraph main {
   rankdir = LR;
@@ -59,7 +59,7 @@ digraph main {
 ---------------------------------------------------------------------
 
 === !
-["graphviz", "terraform_initial6", "svg"]
+["graphviz", "terraform_initial6", "png"]
 ---------------------------------------------------------------------
 digraph main {
   rankdir = LR;
@@ -70,7 +70,7 @@ digraph main {
 ---------------------------------------------------------------------
 
 === !
-["graphviz", "terraform_initial7", "svg"]
+["graphviz", "terraform_initial7", "png"]
 ---------------------------------------------------------------------
 digraph main {
   rankdir = LR;

@@ -1,11 +1,54 @@
 :backend: revealjs
 :customcss: common.css
 
+== Helm как способ управления инфраструктурой
+
+=== Какие есть инструменты?
+* Cluster-autoscaler
+* Cluster-overprovisioner
+* External-dns
+* Cert-manager
+* Nginx-ingress
+
+=== Cluster-autoscaler
+* Manages autoscaling groups
+* AWS, GCE, Azure AKS
+* Autodiscovery by ASG tags
+* Manually specify ASG(aws only!)
+
+=== Cluster-overprovisioner
+* Holds resources for service pods
+* HOT autoscaling
+* Low PriorityClass
+
+=== External-dns
+* Make services discoverable
+* AWS Route 53, GC DNS stable
+* AWS SD, AzureDNS, CloudFlare beta
+* 15+ DNS alpha 
+
+=== Cert-manager
+* Provision and manage TLS certificates
+* Issuers
+** CA
+** Self-Signed
+** ACME
+** Vault
+** Venafi
+
+=== Nginx-ingress
+* Load-balancing by Kubernetes API
+* Providers
+** AWS ELB
+** DO
+** Google Cloud
+* Has default-backend
+
 == Terraform как способ инициализации.
 
 === В Terraform остаются:
 [%step]
-* Заказ кластера и node-pool(единственное, что теперь зависит от провайдера)
+* Заказ кластера и node-pool/ASG (единственное, что теперь зависит от провайдера)
 * Secrets для Kubernetes(credentials для Artifactory)
 * Инициализация Helm-tiller
 * Первичная установка Helm-chart c указанием namespaces
@@ -46,110 +89,12 @@ resource "google_container_cluster" "melbet" {
 
 === При переезде из DO в GCP меняется ~20 строк
 
-== Helm как способ управления инфраструктурой
-
-=== Было: 15 строк кода для одного сервиса со скалированием
-----
-variable "eps_names" { default = ["epsilon400.example.com", 
-                                  "epsilon401.example.com", 
-                                  "epsilon402.example.com", 
-                                  "epsilon403.example.com", 
-                                  "epsilon404.example.com",
-                                  "epsilon405.example.com"] }
-
-resource "digitalocean_droplet" "epsilon" {
-    count = "5"
-    image = "ubuntu-16-04-x64"
-    name = "${element(var.eps_names, count.index)}"
-    region = "lon1"
-    size = "s-2vcpu-2gb"
-    ssh_keys = ["${var.ssh_fingerprint}"]
-    user_data = "${file("minimal.conf")}"
-}
-----
-
-=== Стало: ручное скалирование сервиса одной строкой
-----
-service_3:
-  image: artifactory.example.com/docker/service_3
-    tag: 1.0.5
-  replicaCount: 8
-----
-[%step]
-* Для управления числом под достаточно указать replicaCount.
-
-=== Стало: автоматическое скалирование сервиса одним template
-----
-apiVersion: autoscaling/v2beta1
-kind: HorizontalPodAutoscaler
-...
-----
-[%step]
-* Штатные возможности Kubernetes легко автоматизируются в Helm.
-
-=== Стало: автоматическое скалирование кластера одним helm-chart(cluster-autoscaler)
-----
-cluster-autoscaler:
-  autoDiscovery:
-    clusterName: example_cluster_name
-  cloudProvider=gce
-  autoscalingGroupsnamePrefix[0]:
-    name: example_node_pool_name
-    maxSize: 10
-    minSize: 1
-----
-
-=== Было: 7 строк кода ради одной записи
-----
-resource "digitalocean_record" "888toto-bet-dashboard" {
-  domain = "${digitalocean_domain.888toto-bet.name}"
-  type   = "A"  
-  ttl    = "1800"
-  name   = "dashboard"
-  value = "${digitalocean_droplet.dashboard.ipv4_address}"
-}
-----
-
-=== Стало: автоматизация ingress
-----
-nginx-ingress:
-    service:
-      annotations: 
-        external-dns.alpha.kubernetes.io/hostname: service_3.example.com, grafana.example.com, kibana.example.com
-----
-[%step]
-* Ingress-controller самостоятельно настраивает реверс-прокси для сервисов
-
-=== Стало: автоматизация ingress
-----
-ingress:
-    enabled: true
-    annotations:
-      kubernetes.io/ingress.class: nginx
-    hosts:
-      - host: odds-api.888totobet.com
-        paths:
-          - "/"
-    tls: []
-----
-
-=== Стало: автоматизация dns
-----
-external-dns:
-  sources:
-    - service
-  publishInternalServices: true
-  registry: noop
-----
-[%step]
-* С помощью external-dns каждый проброшенный сервис получает dns-запись
-
 == Проблемы
 
 === Helm tiller
 [%step]
-* Всегда неприятно иметь root-api-account на своём кластере
-* Скоро станет неактуальным
+* Всегда неприятно иметь cluster-admin на своём кластере
+* Можно поднимать локально, тогда будет пользоваться вашими правами
 * https://habr.com/ru/company/oleg-bunin/blog/462665 - статья по безопасности Helm, которая может слегка смягчить боль
 
 === Persistence
