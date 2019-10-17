@@ -26,11 +26,48 @@
 * Autodiscovery by ASG tags
 * Manually specify ASG(aws only!)
 
+=== Cluster-autoscaler - IAM permissions
+----
+  {
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Effect": "Allow",
+            "Action": [
+                "autoscaling:DescribeAutoScalingGroups",
+                "autoscaling:DescribeAutoScalingInstances",
+                "autoscaling:DescribeLaunchConfigurations",
+                "autoscaling:SetDesiredCapacity",
+                "autoscaling:TerminateInstanceInAutoScalingGroup"
+            ],
+            "Resource": "*"
+        }
+    ]
+}
+----
+
+=== Cluster-autoscaler - values.yml
+----
+cluster-autoscaler:
+  autoscalingGroups:
+    - name: asg1
+      maxSize: 1
+      minSize: 10
+  awsRegion: 
+----
+[%step]
+* Можно организовать autoDiscovery, но придется тогда создавать asg через терраформ.
+
 == Cluster-overprovisioner
 [%step]
 * Holds resources for service pods
 * HOT autoscaling
 * Low PriorityClass
+
+=== Cluster-overprovisioner
+----
+helm install stable/cluster-overprovisioner
+----
 
 == External-dns
 [%step]
@@ -38,6 +75,36 @@
 * AWS Route 53, GC DNS stable
 * AWS SD, AzureDNS, CloudFlare beta
 * 15+ DNS alpha 
+
+=== External-dns IAM Permissions
+----
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Action": [
+        "route53:ListHostedZones",
+        "route53:ListResourceRecordSets",
+        "route53:ChangeResourceRecordSets"
+      ],
+      "Resource": "*"
+    }
+  ]
+}
+----
+[%step]
+* Можно отталкиваться от минимальных прав,
+создавая hosted-zone через terraform.
+
+=== External-dns nginx-ingress values.yaml
+----
+controller:
+    ingressClass: elb
+    service:
+      annotations:
+        external-dns.alpha.kubernetes.io/hostname: service1.example.com, service2.example.com
+----
 
 == Cert-manager
 [%step]
@@ -57,6 +124,24 @@
 ** DO
 ** Google Cloud
 * Has default-backend
+
+=== Chart annotations for ingress:
+----
+grafana:
+  ingress:
+    enabled: true
+    hosts:
+      - grafana.genestack.net
+    annotations:
+      kubernetes.io/ingress.class: elb
+      ingress.kubernetes.io/ssl-redirect: "true"
+      kubernetes.io/tls-acme: "true"
+      certmanager.k8s.io/issuer: letsencrypt-staging
+    tls:
+      - secretName: grafana-tls
+        hosts:
+          - grafana.genestack.net
+----
 
 == Terraform как способ инициализации.
 
