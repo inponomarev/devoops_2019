@@ -1,3 +1,14 @@
+:backend: revealjs
+:revealjs_theme: white
+:revealjs_customtheme: white_course.css
+:revealjs_history:
+:customcss: common.css
+:revealjs_transition: none
+:revealjs_slideNumber: true
+:revealjs_center: false
+:revealjs_width: 1600
+:revealjs_height: 900
+
 == И вот что мы получим
 [%step]
 * Легко переехать к другому провайдеру
