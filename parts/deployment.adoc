@@ -13,8 +13,8 @@
 ["graphviz", "main_scheme_joke", "png"]
 ---------------------------------------------------------------------
 digraph main {
-  node [fontname = "PT Sans", fontsize=20];
-  edge [fontname = "PT Sans", fontsize=20];
+  node [fontname = "PT Sans", fontsize=30];
+  edge [fontname = "PT Sans", fontsize=30];
   rankdir = LR;
   source [shape=polygon,sides=5,peripheries=3,color=lightblue,style=filled,height=1.5,label="Исходный \nсайт"];
   spectator [shape=polygon,sides=5,peripheries=3,color=orange,style=filled,height=1.5,label="Пользователь"];
@@ -26,8 +26,8 @@ digraph main {
 ["graphviz", "main_scheme_1", "png"]
 ---------------------------------------------------------------------
 digraph main {
-  node [fontname = "PT Sans", fontsize=20];
-  edge [fontname = "PT Sans", fontsize=20];
+  node [fontname = "PT Sans", fontsize=30];
+  edge [fontname = "PT Sans", fontsize=30];
   rankdir = LR;
   source [shape=polygon,sides=5,peripheries=3,color=lightblue,style=filled,height=1.5,label="Исходный \nсайт"];
   spectator [shape=polygon,sides=5,peripheries=3,color=orange,style=filled,height=1.5,label="Пользователь"];
@@ -59,8 +59,8 @@ digraph main {
 ["graphviz", "main_scheme_legend_", "png"]
 ---------------------------------------------------------------------
 digraph main {
-  node [fontname = "PT Sans", fontsize=20];
-  edge [fontname = "PT Sans", fontsize=20];
+  node [fontname = "PT Sans", fontsize=30];
+  edge [fontname = "PT Sans", fontsize=30];
   service [shape=diamond,label="Наши сервисы"];
   side_service [shape=box, label="Сторонние сервисы"];
 }
@@ -70,8 +70,8 @@ digraph main {
 ["graphviz", "main_scheme_2", "png"]
 ---------------------------------------------------------------------
 digraph main {
-  node [fontname = "PT Sans", fontsize=20];
-  edge [fontname = "PT Sans", fontsize=20];
+  node [fontname = "PT Sans", fontsize=30];
+  edge [fontname = "PT Sans", fontsize=30];
   rankdir = LR;
   source [shape=polygon,sides=5,peripheries=3,color=lightblue,style=filled,height=1.5,label="Исходный \nсайт"];
   spectator [shape=polygon,sides=5,peripheries=3,color=orange,style=filled,height=1.5,label="Пользователь"];
@@ -116,8 +116,8 @@ digraph main {
 ["graphviz", "main_scheme_legend_", "png"]
 ---------------------------------------------------------------------
 digraph main {
-  node [fontname = "PT Sans", fontsize=20];
-  edge [fontname = "PT Sans", fontsize=20];
+  node [fontname = "PT Sans", fontsize=30];
+  edge [fontname = "PT Sans", fontsize=30];
   service [shape=diamond,label="Наши сервисы"];
   side_service [shape=box, label="Сторонние сервисы"];
 }
@@ -127,8 +127,8 @@ digraph main {
 ["graphviz", "main_scheme_3", "png"]
 ---------------------------------------------------------------------
 digraph main {
-  node [fontname = "PT Sans", fontsize=20];
-  edge [fontname = "PT Sans", fontsize=20];
+  node [fontname = "PT Sans", fontsize=30];
+  edge [fontname = "PT Sans", fontsize=30];
   rankdir = LR;
   source [shape=polygon,sides=5,peripheries=3,color=lightblue,style=filled,height=1.5,label="Исходный \nсайт"];
   spectator [shape=polygon,sides=5,peripheries=3,color=orange,style=filled,height=1.5,label="Пользователь"];
@@ -181,8 +181,8 @@ digraph main {
 ["graphviz", "main_scheme_legend_", "png"]
 ---------------------------------------------------------------------
 digraph main {
-  node [fontname = "PT Sans", fontsize=20];
-  edge [fontname = "PT Sans", fontsize=20];
+  node [fontname = "PT Sans", fontsize=30];
+  edge [fontname = "PT Sans", fontsize=30];
   service [shape=diamond,label="Наши сервисы"];
   side_service [shape=box, label="Сторонние сервисы"];
 }

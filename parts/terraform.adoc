@@ -17,8 +17,8 @@
 ["graphviz", "terraform_initial1", "png"]
 ---------------------------------------------------------------------
 digraph main {
-  node [fontname = "PT Sans", fontsize=20];
-  edge [fontname = "PT Sans", fontsize=20];
+  node [fontname = "PT Sans", fontsize=30];
+  edge [fontname = "PT Sans", fontsize=30];
   rankdir = LR;
   terraform  [shape=polygon,sides=6,peripheries=3,color=blueviolet,style=filled,label="Terraform"];
 }
@@ -28,8 +28,8 @@ digraph main {
 ["graphviz", "terraform_initial5", "png"]
 ---------------------------------------------------------------------
 digraph main {
-  node [fontname = "PT Sans", fontsize=20];
-  edge [fontname = "PT Sans", fontsize=20];
+  node [fontname = "PT Sans", fontsize=30];
+  edge [fontname = "PT Sans", fontsize=30];
   rankdir = LR;
   terraform  [shape=polygon,sides=6,peripheries=3,color=blueviolet,style=filled,label="Terraform"];
 
@@ -41,8 +41,8 @@ digraph main {
 ["graphviz", "terraform_initial6", "png"]
 ---------------------------------------------------------------------
 digraph main {
-  node [fontname = "PT Sans", fontsize=20];
-  edge [fontname = "PT Sans", fontsize=20];
+  node [fontname = "PT Sans", fontsize=30];
+  edge [fontname = "PT Sans", fontsize=30];
   rankdir = LR;
   terraform  [shape=polygon,sides=6,peripheries=3,color=blueviolet,style=filled,label="Terraform"];
   profit [label="Profit?"]
@@ -54,8 +54,8 @@ digraph main {
 ["graphviz", "terraform_initial7", "png"]
 ---------------------------------------------------------------------
 digraph main {
-  node [fontname = "PT Sans", fontsize=20];
-  edge [fontname = "PT Sans", fontsize=20];
+  node [fontname = "PT Sans", fontsize=30];
+  edge [fontname = "PT Sans", fontsize=30];
   rankdir = LR;
   terraform  [shape=polygon,sides=6,peripheries=3,color=blueviolet,style=filled,label="Terraform"];
   cloud_provider -> k8s_cluster -> helm -> chart;
