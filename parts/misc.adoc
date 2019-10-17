@@ -16,8 +16,8 @@
 * Cluster-autoscaler
 * Cluster-overprovisioner
 * External-dns
-* Cert-manager
 * Nginx-ingress
+* Cert-manager
 
 == Cluster-autoscaler
 [%step]
@@ -103,18 +103,8 @@ controller:
     ingressClass: elb
     service:
       annotations:
-        external-dns.alpha.kubernetes.io/hostname: service1.example.com, service2.example.com
+        external-dns.alpha.kubernetes.io/hostname: service1.example.com
 ----
-
-== Cert-manager
-[%step]
-* Provision and manage TLS certificates
-* Issuers
-** CA
-** Self-Signed
-** ACME
-** Vault
-** Venafi
 
 == Nginx-ingress
 [%step]
@@ -125,7 +115,37 @@ controller:
 ** Google Cloud
 * Has default-backend
 
-=== Chart annotations for ingress:
+== Cert-manager
+[%step]
+* Provision and manage TLS certificates
+* Maintainer - Jetstack
+* Pre-1.0
+* Issuers
+** CA
+** Self-Signed
+** ACME
+** Vault
+** Venafi
+
+=== Cert-manager installation
+----
+# Install the CustomResourceDefinition resources separately
+kubectl apply --validate=false -f https://raw.githubusercontent.com/jetstack/cert-manager/release-0.11/deploy/manifests/00-crds.yaml
+# Create the namespace for cert-manager
+kubectl create namespace cert-manager
+# Add the Jetstack Helm repository
+helm repo add jetstack https://charts.jetstack.io
+# Update your local Helm chart repository cache
+helm repo update
+# Install the cert-manager Helm chart
+helm install \
+  --name cert-manager \
+  --namespace cert-manager \
+  --version v0.11.0 \
+  jetstack/cert-manager
+----
+
+=== Chart annotations for ingress/tls:
 ----
 grafana:
   ingress:
@@ -141,6 +161,46 @@ grafana:
       - secretName: grafana-tls
         hosts:
           - grafana.genestack.net
+----
+
+=== Issuer for cert-manager
+----
+apiVersion: cert-manager.io/v1alpha2
+kind: ClusterIssuer
+metadata:
+  name: letsencrypt-staging
+spec:
+  acme:
+    email: user@example.com
+    server: https://acme-staging-v02.api.letsencrypt.org/directory
+    privateKeySecretRef:
+      name: example-issuer-account-key
+    solvers:
+    - http01:
+        ingress:
+          class: elb
+----
+
+=== Certificate for cert-manager
+----
+apiVersion: cert-manager.io/v1alpha2
+kind: Certificate
+metadata:
+  name: example-com
+  namespace: default
+spec:
+  secretName: example-com-tls
+  duration: 2160h # 90d
+  renewBefore: 360h # 15d
+  commonName: example.com
+  dnsNames:
+  - example.com
+  - www.example.com
+  uriSANs:
+  - spiffe://cluster.local/ns/sandbox/sa/example
+  issuerRef:
+    name: letsencrypt-staging
+    kind: ClusterIssuer
 ----
 
 == Terraform как способ инициализации.
