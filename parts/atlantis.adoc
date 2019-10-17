@@ -5,6 +5,8 @@ image::images/hero.png[]
 ["graphviz", "Atlantis_1", "png"]
 ---------------------------------------------------------------------
 digraph main {
+  node [fontname = "PT Sans", fontsize=20];
+  edge [fontname = "PT Sans", fontsize=20];
   rankdir = LR;
   GitHub -> Atlantis[label="webhook",color=red]
   GitHub -> Atlantis[label="tf-file",color=red]
@@ -20,6 +22,8 @@ digraph main {
 ["graphviz", "Atlantis_2", "png"]
 ---------------------------------------------------------------------
 digraph main {
+  node [fontname = "PT Sans", fontsize=20];
+  edge [fontname = "PT Sans", fontsize=20];
   rankdir = LR;
   GitHub -> Atlantis[label="webhook"]
   GitHub -> Atlantis[label="tf-file"]
@@ -35,6 +39,8 @@ digraph main {
 ["graphviz", "Atlantis_3", "png"]
 ---------------------------------------------------------------------
 digraph main {
+  node [fontname = "PT Sans", fontsize=20];
+  edge [fontname = "PT Sans", fontsize=20];
   rankdir = LR;
   GitHub -> Atlantis[label="webhook"]
   GitHub -> Atlantis[label="tf-file"]
@@ -50,6 +56,8 @@ digraph main {
 ["graphviz", "Atlantis_4", "png"]
 ---------------------------------------------------------------------
 digraph main {
+  node [fontname = "PT Sans", fontsize=20];
+  edge [fontname = "PT Sans", fontsize=20];
   rankdir = LR;
   GitHub -> Atlantis[label="webhook"]
   GitHub -> Atlantis[label="tf-file"]

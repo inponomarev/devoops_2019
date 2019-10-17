@@ -2,6 +2,8 @@
 ["graphviz", "code_cycle", "png"]
 ---------------------------------------------------------------------
 digraph main {
+  node [fontname = "PT Sans", fontsize=20];
+  edge [fontname = "PT Sans", fontsize=20];
   rankdir = LR;
   GitHub -> Jenkins[label="code"];
   Jenkins -> Artifactory[label="jar-file"];
@@ -12,6 +14,8 @@ digraph main {
 ["graphviz", "image_cycle", "png"]
 ---------------------------------------------------------------------
 digraph main {
+  node [fontname = "PT Sans", fontsize=20];
+  edge [fontname = "PT Sans", fontsize=20];
   rankdir = LR;
   GitHub -> Jenkins[label="code"];
   Artifactory -> Jenkins[label="jar-file"];
@@ -40,6 +44,8 @@ image::images/before_k8s_after_k8s.jpg[]
 ["graphviz", "chart_cycle", "png"]
 ---------------------------------------------------------------------
 digraph main {
+  node [fontname = "PT Sans", fontsize=20];
+  edge [fontname = "PT Sans", fontsize=20];
   rankdir = LR;
   GitHub -> Jenkins[label="code"];
   Jenkins -> Artifactory[label="chart"]
@@ -58,6 +64,8 @@ digraph main {
 ["graphviz", "infra_cycle", "png"]
 ---------------------------------------------------------------------
 digraph main {
+  node [fontname = "PT Sans", fontsize=20];
+  edge [fontname = "PT Sans", fontsize=20];
   rankdir = LR;
   GitHub -> Atlantis[label="tf"];
   Artifactory -> cloud_provider[label="images, charts"];
@@ -70,6 +78,8 @@ digraph main {
 ["graphviz", "all_cycle", "png"]
 ---------------------------------------------------------------------
 digraph main {
+  node [fontname = "PT Sans", fontsize=20];
+  edge [fontname = "PT Sans", fontsize=20];
   rankdir = LR;
   GitHub;
   Atlantis;
@@ -90,6 +100,8 @@ digraph main {
 ["graphviz", "all_cycle_interest", "png"]
 ---------------------------------------------------------------------
 digraph main {
+  node [fontname = "PT Sans", fontsize=20];
+  edge [fontname = "PT Sans", fontsize=20];
   rankdir = LR;
   GitHub[color=blue];
   Atlantis[color=blue];

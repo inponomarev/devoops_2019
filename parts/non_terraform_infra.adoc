@@ -2,6 +2,8 @@
 ["graphviz", "terraform_kubernetes", "png"]
 ---------------------------------------------------------------------
 digraph main {
+  node [fontname = "PT Sans", fontsize=20];
+  edge [fontname = "PT Sans", fontsize=20];
   rankdir = LR;
   terraform  [shape=polygon,sides=6,peripheries=3,color=blueviolet,style=filled,label="Terraform"];
   cloud_provider -> k8s_cluster -> helm -> chart;
@@ -16,6 +18,8 @@ digraph main {
 ["graphviz", "terraform_kubernetes1", "png"]
 ---------------------------------------------------------------------
 digraph main {
+  node [fontname = "PT Sans", fontsize=20];
+  edge [fontname = "PT Sans", fontsize=20];
   rankdir = LR;
   terraform  [shape=polygon,sides=6,peripheries=3,color=blueviolet,style=filled,label="Terraform"];
   cloud_provider -> k8s_cluster -> helm -> chart;
@@ -31,6 +35,8 @@ digraph main {
 ["graphviz", "terraform_kubernetes2", "png"]
 ---------------------------------------------------------------------
 digraph main {
+  node [fontname = "PT Sans", fontsize=20];
+  edge [fontname = "PT Sans", fontsize=20];
   rankdir = LR;
   terraform  [shape=polygon,sides=6,peripheries=3,color=blueviolet,style=filled,label="Terraform"];
   cloud_provider -> k8s_cluster -> helm -> chart;
@@ -47,6 +53,8 @@ digraph main {
 ["graphviz", "terraform_kubernetes3", "png"]
 ---------------------------------------------------------------------
 digraph main {
+  node [fontname = "PT Sans", fontsize=20];
+  edge [fontname = "PT Sans", fontsize=20];
   rankdir = LR;
   terraform  [shape=polygon,sides=6,peripheries=3,color=blueviolet,style=filled,label="Terraform"];
   cloud_provider -> k8s_cluster -> helm -> chart;
