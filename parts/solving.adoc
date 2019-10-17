@@ -1,6 +1,3 @@
-:backend: revealjs
-:customcss: common.css
-
 == Terraform - это хорошо.
 
 === Из пушки по воробьям?

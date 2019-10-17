@@ -13,15 +13,15 @@ include::parts/intro.adoc[]
 
 include::parts/problem.adoc[]
 
-include::diagrams/deployment.adoc[]
+include::parts/deployment.adoc[]
 
-include::diagrams/code_cycles.adoc[]
+include::parts/code_cycles.adoc[]
 
-include::diagrams/terraform.adoc[]
+include::parts/terraform.adoc[]
 
 include::parts/solving.adoc[]
 
-include::diagrams/non_terraform_infra.adoc[]
+include::parts/non_terraform_infra.adoc[]
 
 include::parts/misc.adoc[]
 

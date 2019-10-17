@@ -1,9 +1,7 @@
-:backend: revealjs
-:customcss: common.css
-
 == Helm как способ управления инфраструктурой
 
 === Какие есть инструменты?
+[%step]
 * Cluster-autoscaler
 * Cluster-overprovisioner
 * External-dns
@@ -11,23 +9,27 @@
 * Nginx-ingress
 
 === Cluster-autoscaler
+[%step]
 * Manages autoscaling groups
 * AWS, GCE, Azure AKS
 * Autodiscovery by ASG tags
 * Manually specify ASG(aws only!)
 
 === Cluster-overprovisioner
+[%step]
 * Holds resources for service pods
 * HOT autoscaling
 * Low PriorityClass
 
 === External-dns
+[%step]
 * Make services discoverable
 * AWS Route 53, GC DNS stable
 * AWS SD, AzureDNS, CloudFlare beta
 * 15+ DNS alpha 
 
 === Cert-manager
+[%step]
 * Provision and manage TLS certificates
 * Issuers
 ** CA
@@ -37,6 +39,7 @@
 ** Venafi
 
 === Nginx-ingress
+[%step]
 * Load-balancing by Kubernetes API
 * Providers
 ** AWS ELB

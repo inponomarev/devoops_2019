@@ -1,6 +1,3 @@
-:backend: revealjs
-:customcss: common.css
-
 == И вот что мы получим
 [%step]
 * Легко переехать к другому провайдеру

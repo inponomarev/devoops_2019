@@ -1,0 +1,62 @@
+== Atlantis - IaC автоматизация прямо из VCS
+image::images/hero.png[]
+
+=== Некосмический корабль
+["graphviz", "Atlantis_1", "png"]
+---------------------------------------------------------------------
+digraph main {
+  rankdir = LR;
+  GitHub -> Atlantis[label="webhook",color=red]
+  GitHub -> Atlantis[label="tf-file",color=red]
+  GitHub -> Atlantis[label="apply"]
+  Atlantis -> cloud_provider[label="infrastructure"]
+  Atlantis -> backend[label="tfstate"]
+  backend -> Atlantis[label="tfstate"]
+  Atlantis -> GitHub[label="output"]
+}
+---------------------------------------------------------------------
+
+=== Некосмический корабль
+["graphviz", "Atlantis_2", "png"]
+---------------------------------------------------------------------
+digraph main {
+  rankdir = LR;
+  GitHub -> Atlantis[label="webhook"]
+  GitHub -> Atlantis[label="tf-file"]
+  GitHub -> Atlantis[label="apply"]
+  Atlantis -> cloud_provider[label="infrastructure"]
+  Atlantis -> backend[label="tfstate"]
+  backend -> Atlantis[label="tfstate",color=red]
+  Atlantis -> GitHub[label="output",color=red]
+}
+---------------------------------------------------------------------
+
+=== Некосмический корабль
+["graphviz", "Atlantis_3", "png"]
+---------------------------------------------------------------------
+digraph main {
+  rankdir = LR;
+  GitHub -> Atlantis[label="webhook"]
+  GitHub -> Atlantis[label="tf-file"]
+  GitHub -> Atlantis[label="apply",color=red]
+  Atlantis -> cloud_provider[label="infrastructure"]
+  Atlantis -> backend[label="tfstate"]
+  backend -> Atlantis[label="tfstate"]
+  Atlantis -> GitHub[label="output"]
+}
+---------------------------------------------------------------------
+
+=== Некосмический корабль
+["graphviz", "Atlantis_4", "png"]
+---------------------------------------------------------------------
+digraph main {
+  rankdir = LR;
+  GitHub -> Atlantis[label="webhook"]
+  GitHub -> Atlantis[label="tf-file"]
+  Atlantis -> cloud_provider[label="infrastructure",color=red]
+  Atlantis -> backend[label="tfstate",color=red]
+  GitHub -> Atlantis[label="apply"]
+  backend -> Atlantis[label="tfstate"]
+  Atlantis -> GitHub[label="output",color=red]
+}
+---------------------------------------------------------------------
