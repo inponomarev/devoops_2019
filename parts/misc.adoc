@@ -18,6 +18,12 @@
 * External-dns
 * Nginx-ingress
 * Cert-manager
+* HPA
+
+[.notes]
+--
+HPA - Иван Глушков - Postmates
+--
 
 == Cluster-autoscaler
 [%step]
