@@ -272,6 +272,7 @@ resource "aws_eks_cluster" "tf_eks" {
     "aws_iam_role_policy_attachment.tf-cluster-AmazonEKSServicePolicy",
   ]
 }
+----
 Итого:: 510 строк для AWS(вместе с кастомными IAM)
 
 === А как насчет Bare Metal?
