@@ -8,7 +8,14 @@ sudo: required
 services:
   - docker
 
+
+cache:
+  directories:
+    - node_modules
+
 before_install:
+  - npm install decktape
+  
   - mkdir -p output
   - docker pull dmeatriy1993/asciidoctor_sans
   - git clone -b 3.7.0 --depth 1 https://github.com/hakimel/reveal.js.git output/reveal.js
@@ -28,6 +35,7 @@ script:
     -o index.html
     -D /documents/output
     all_in_one.adoc
+  - node node_modules/decktape/decktape.js -s 3200x1800 --slides 1-500 reveal "file:///${TRAVIS_BUILD_DIR}/output/index.html?fragments=true" output/slides.pdf
 
 after_error:
   - docker logs asciidoc-to-html
