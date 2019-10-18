@@ -17,6 +17,8 @@ include::parts/deployment.adoc[]
 
 include::parts/code_cycles.adoc[]
 
+include::parts/atlantis.adoc[]
+
 include::parts/terraform.adoc[]
 
 include::parts/solving.adoc[]
