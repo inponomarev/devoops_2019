@@ -53,7 +53,7 @@ cluster-autoscaler:
     - name: asg1
       maxSize: 1
       minSize: 10
-  awsRegion: 
+  awsRegion: us-east-1
 ----
 [%step]
 * Можно организовать autoDiscovery, но придется тогда создавать asg через терраформ.
@@ -129,15 +129,10 @@ controller:
 
 === Cert-manager installation
 ----
-# Install the CustomResourceDefinition resources separately
 kubectl apply --validate=false -f https://raw.githubusercontent.com/jetstack/cert-manager/release-0.11/deploy/manifests/00-crds.yaml
-# Create the namespace for cert-manager
 kubectl create namespace cert-manager
-# Add the Jetstack Helm repository
 helm repo add jetstack https://charts.jetstack.io
-# Update your local Helm chart repository cache
 helm repo update
-# Install the cert-manager Helm chart
 helm install \
   --name cert-manager \
   --namespace cert-manager \
@@ -151,7 +146,7 @@ grafana:
   ingress:
     enabled: true
     hosts:
-      - grafana.genestack.net
+      - grafana.example.com
     annotations:
       kubernetes.io/ingress.class: elb
       ingress.kubernetes.io/ssl-redirect: "true"
@@ -160,7 +155,7 @@ grafana:
     tls:
       - secretName: grafana-tls
         hosts:
-          - grafana.genestack.net
+          - grafana.example.com
 ----
 
 === Issuer for cert-manager
@@ -213,7 +208,7 @@ spec:
 
 === В Terraform остаются:
 [%step]
-* Заказ кластера и node-pool/ASG (единственное, что теперь зависит от провайдера)
+* Заказ кластера и (опционально) node-pool
 * Secrets для Kubernetes(credentials для Artifactory)
 * Инициализация Helm-tiller
 * Первичная установка Helm-chart c указанием namespaces
@@ -254,6 +249,27 @@ resource "google_container_cluster" "melbet" {
 
 === При переезде из DO в GCP меняется ~20 строк
 
+=== !
+----
+resource "aws_eks_cluster" "tf_eks" {
+  name            = "${var.eks_cluster-name}"
+  role_arn        = "${aws_iam_role.tf-eks-master.arn}"
+  version         = "1.14"
+ 
+  vpc_config {
+    security_group_ids = ["${module.security_groups.tf-eks-master-id}"]
+    subnet_ids         = ["${module.subnet_id1}", "${module.subnet_id2}"]
+  }
+ 
+  depends_on = [
+    "aws_iam_role_policy_attachment.tf-cluster-AmazonEKSClusterPolicy",
+    "aws_iam_role_policy_attachment.tf-cluster-AmazonEKSServicePolicy",
+  ]
+}
+Итого:: 510 строк для AWS(вместе с кастомными IAM)
+
+=== При переезде в AWS пришлось потрудиться, но на то он и AWS
+
 == Проблемы
 
 === Helm tiller
@@ -261,15 +277,16 @@ resource "google_container_cluster" "melbet" {
 * Всегда неприятно иметь cluster-admin на своём кластере
 * Можно поднимать локально, тогда будет пользоваться вашими правами
 * https://habr.com/ru/company/oleg-bunin/blog/462665 - статья по безопасности Helm, которая может слегка смягчить боль
+* С выходом Helm3 станет неактуальным.
 
 === Persistence
 [%step]
-* Создать persistent-volume - полдела.
-* Восстановиться из него после падения - почти невыполнимая задача.
+* Грамотный persistence management просто необходим
 * Неактуальным не станет
 
 === Kafka
 [%step]
 * Оригинальный helm-chart от Confluent - требует квалификации для варения.
 * Современные библиотеки клиентов - с трудом это переживают.
+* Можно выложить за отдельный load-balancer
 * Купить сервис и забыть.
